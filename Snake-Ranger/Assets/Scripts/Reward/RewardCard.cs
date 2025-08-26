@@ -15,14 +15,38 @@ public class RewardCard : MonoBehaviour
 
     public void Bind(Reward data, UnityAction<Reward> onClicked)
     {
+        if (data == null)
+        {
+            Debug.LogError("RewardCard.Bind called with null reward!");
+            return;
+        }
+
         reward = data;
         onClick = onClicked;
 
-        if (iconImage) iconImage.sprite = data.icon;
-        if (titleText) titleText.text = data.rewardName;
-        if (descriptionText) descriptionText.text = data.description;
+        // Update visuals
+        if (iconImage != null && data.icon != null)
+            iconImage.sprite = data.icon;
 
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => onClick?.Invoke(reward));
+        if (titleText != null)
+            titleText.text = data.rewardName;
+
+        if (descriptionText != null)
+            descriptionText.text = data.description;
+
+        // Setup button
+        if (button != null)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() =>
+            {
+                Debug.Log("RewardCard clicked: " + reward.rewardName);
+                onClick?.Invoke(reward);
+            });
+        }
+        else
+        {
+            Debug.LogError("RewardCard has no Button reference set!");
+        }
     }
 }
