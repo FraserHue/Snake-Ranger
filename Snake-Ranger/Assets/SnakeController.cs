@@ -15,6 +15,10 @@ public class SnakeController : MonoBehaviour
     private List<GameObject> BodyParts = new List<GameObject>();
     private List<Vector3> PositionHistory = new List<Vector3>();
 
+    public float AimSmoothTime = 0.06f;
+    private Vector3 aimPoint;
+    private Vector3 aimVel;
+
     void Start()
     {
         GrowSnake();
@@ -23,10 +27,7 @@ public class SnakeController : MonoBehaviour
         GrowSnake();
         GrowSnake();
         GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();                                           
+        aimPoint = transform.position;
     }
 
     void Update()
@@ -36,8 +37,21 @@ public class SnakeController : MonoBehaviour
         transform.position += transform.forward * MoveSpeed * Time.deltaTime;
 
         // steering
-        float steerDirection = Input.GetAxis("Horizontal");
-        transform.Rotate(Vector3.up * steerDirection * SteerSpeed * Time.deltaTime);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
+        float enter;
+        if (groundPlane.Raycast(ray, out enter))
+        {
+            Vector3 hitPoint = ray.GetPoint(enter);
+            aimPoint = Vector3.SmoothDamp(aimPoint, hitPoint, ref aimVel, AimSmoothTime);
+            Vector3 toMouse = aimPoint - transform.position;
+            toMouse.y = 0f;
+            if (toMouse.sqrMagnitude > 0.0001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(toMouse.normalized, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, SteerSpeed * Time.deltaTime);
+            }
+        }
 
         // store position history
         PositionHistory.Insert(0, transform.position);
