@@ -21,6 +21,9 @@ public class SnakeController : MonoBehaviour
 
     private bool isMoving = true;
 
+    public bool UseMouseControl = true;
+    public bool UseADControl = true;
+
     void Start()
     {
         GrowSnake();
@@ -38,6 +41,7 @@ public class SnakeController : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.S)) isMoving = false;
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
@@ -46,36 +50,50 @@ public class SnakeController : MonoBehaviour
             transform.position += transform.forward * MoveSpeed * Time.deltaTime;
 
         // steering
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
-        float enter;
-        if (groundPlane.Raycast(ray, out enter))
+        if (isMoving)
         {
-            Vector3 hitPoint = ray.GetPoint(enter);
-            aimPoint = Vector3.SmoothDamp(aimPoint, hitPoint, ref aimVel, AimSmoothTime);
-            Vector3 toMouse = aimPoint - transform.position;
-            toMouse.y = 0f;
-            if (toMouse.sqrMagnitude > 0.0001f)
+            if (UseMouseControl)
             {
-                Quaternion targetRot = Quaternion.LookRotation(toMouse.normalized, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, SteerSpeed * Time.deltaTime);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
+                float enter;
+                if (groundPlane.Raycast(ray, out enter))
+                {
+                    Vector3 hitPoint = ray.GetPoint(enter);
+                    aimPoint = Vector3.SmoothDamp(aimPoint, hitPoint, ref aimVel, AimSmoothTime);
+                    Vector3 toMouse = aimPoint - transform.position;
+                    toMouse.y = 0f;
+                    if (toMouse.sqrMagnitude > 0.0001f)
+                    {
+                        Quaternion targetRot = Quaternion.LookRotation(toMouse.normalized, Vector3.up);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, SteerSpeed * Time.deltaTime);
+                    }
+                }
+            }
+
+            if (UseADControl)
+            {
+                float steerDirection = Input.GetAxis("Horizontal");
+                if (Mathf.Abs(steerDirection) > 0.0001f)
+                    transform.Rotate(Vector3.up * steerDirection * SteerSpeed * Time.deltaTime);
             }
         }
-        float steerDirection = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(steerDirection) > 0.0001f)
-            transform.Rotate(Vector3.up * steerDirection * SteerSpeed * Time.deltaTime);
 
         // store position history
-        PositionHistory.Insert(0, transform.position);
+        if (isMoving)
+            PositionHistory.Insert(0, transform.position);
 
         // move body parts
-        int index = 1;
-        foreach (var body in BodyParts) {
-            Vector3 point = PositionHistory[Mathf.Min(index * Gap, PositionHistory.Count - 1)];
-            Vector3 moveDirection = point - body.transform.position;
-            body.transform.position += moveDirection * BodySpeed * Time.deltaTime;
-            body.transform.LookAt(point);
-            index++;
+        if (isMoving)
+        {
+            int index = 1;
+            foreach (var body in BodyParts) {
+                Vector3 point = PositionHistory[Mathf.Min(index * Gap, PositionHistory.Count - 1)];
+                Vector3 moveDirection = point - body.transform.position;
+                body.transform.position += moveDirection * BodySpeed * Time.deltaTime;
+                body.transform.LookAt(point);
+                index++;
+            }
         }
     }
 
