@@ -19,8 +19,14 @@ public class SnakeController : MonoBehaviour
     private Vector3 aimPoint;
     private Vector3 aimVel;
 
+    private bool isMoving = true;
+
     void Start()
     {
+        GrowSnake();
+        GrowSnake();
+        GrowSnake();
+        GrowSnake();
         GrowSnake();
         GrowSnake();
         GrowSnake();
@@ -32,9 +38,12 @@ public class SnakeController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.S)) isMoving = false;
+        if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
         // forward movement
-        transform.position += transform.forward * MoveSpeed * Time.deltaTime;
+        if (isMoving)
+            transform.position += transform.forward * MoveSpeed * Time.deltaTime;
 
         // steering
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -52,6 +61,9 @@ public class SnakeController : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, SteerSpeed * Time.deltaTime);
             }
         }
+        float steerDirection = Input.GetAxis("Horizontal");
+        if (Mathf.Abs(steerDirection) > 0.0001f)
+            transform.Rotate(Vector3.up * steerDirection * SteerSpeed * Time.deltaTime);
 
         // store position history
         PositionHistory.Insert(0, transform.position);
