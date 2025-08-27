@@ -31,11 +31,6 @@ public class SnakeController : MonoBehaviour
         GrowSnake();
         GrowSnake();
         GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
         aimPoint = transform.position;
     }
 
