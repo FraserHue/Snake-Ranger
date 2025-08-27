@@ -19,27 +19,41 @@ public class RewardManager : MonoBehaviour
 
     private readonly List<GameObject> spawnedCards = new List<GameObject>();
 
+    private Queue<int> pendingLevels = new Queue<int>();
+    private bool showingRewards = false;
+
     void Start()
     {
-        // Subscribe to XPManager's level-up event
         if (XPManager.Instance != null)
-            XPManager.Instance.OnLevelUp += ShowRewards;
-        else
-            Debug.LogWarning("RewardManager: XPManager.Instance is null at Start!");
+            XPManager.Instance.OnLevelUp += QueueReward;
     }
 
     void OnDestroy()
     {
-        // Unsubscribe to prevent leaks
         if (XPManager.Instance != null)
-            XPManager.Instance.OnLevelUp -= ShowRewards;
+            XPManager.Instance.OnLevelUp -= QueueReward;
     }
 
-    public void ShowRewards(int newLevel)
+    private void QueueReward(int newLevel)
     {
-        Debug.Log("RewardManager: Level Up detected, showing rewards.");
-        if (pauseOnChoice) Time.timeScale = 0f;
+        pendingLevels.Enqueue(newLevel);
+        if (!showingRewards)
+            ShowNextReward();
+    }
 
+    private void ShowNextReward()
+    {
+        if (pendingLevels.Count == 0)
+        {
+            showingRewards = false;
+            return;
+        }
+
+        showingRewards = true;
+        int lvl = pendingLevels.Dequeue();
+        Debug.Log($"Showing reward for level {lvl}");
+
+        if (pauseOnChoice) Time.timeScale = 0f;
         ClearCards();
         rewardPanel.SetActive(true);
 
@@ -57,12 +71,13 @@ public class RewardManager : MonoBehaviour
     {
         chosen.Apply(player);
 
-        // Close UI and cleanup
         ClearCards();
         rewardPanel.SetActive(false);
         if (pauseOnChoice) Time.timeScale = 1f;
-    }
 
+        // After player picks, show next queued reward
+        ShowNextReward();
+    }
     private void ClearCards()
     {
         for (int i = spawnedCards.Count - 1; i >= 0; i--)

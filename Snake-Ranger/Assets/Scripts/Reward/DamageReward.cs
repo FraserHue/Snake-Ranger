@@ -8,5 +8,6 @@ public class DamageReward : Reward
     public override void Apply(PlayerSnake player)
     {
         player.damageMultiplier *= (1f + percent);
+        Debug.Log($"DamageReward applied: +{percent * 100}% damage multiplier.");
     }
 }
