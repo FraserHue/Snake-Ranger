@@ -1441,6 +1441,7 @@ MonoBehaviour:
   - rid: 8522359228098675450
   - rid: 8522359228098675449
   - rid: 8522359228098675448
+  - rid: 8522359228502115240
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -1478,6 +1479,16 @@ MonoBehaviour:
           m_Value1: 8300112315011027921
         Name: SpiderLineofSightDetector
         m_Value: {fileID: 1319151536}
+    - rid: 8522359228502115240
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 416775771654850813
+          m_Value1: 12143274043655801944
+        Name: SpiderPatrolPoints
+        m_Value:
+        - {fileID: 1180538352}
+        - {fileID: 147639898}
 --- !u!136 &1319151540
 CapsuleCollider:
   m_ObjectHideFlags: 0
