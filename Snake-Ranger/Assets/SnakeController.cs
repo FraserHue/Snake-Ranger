@@ -9,6 +9,7 @@ public class SnakeController : MonoBehaviour
     public float SteerSpeed = 300f;
     public int BodySpeed = 5;
     public int Gap = 10;
+    public int InitialSnakeLength = 10;
 
     public GameObject BodyPrefab;
 
@@ -24,13 +25,10 @@ public class SnakeController : MonoBehaviour
     public bool UseMouseControl = true;
     public bool UseADControl = true;
 
+
     void Start()
     {
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
-        GrowSnake();
+        for (int i = 0; i < InitialSnakeLength; i++) GrowSnake();
         aimPoint = transform.position;
     }
 
@@ -78,12 +76,21 @@ public class SnakeController : MonoBehaviour
         if (isMoving)
             PositionHistory.Insert(0, transform.position);
 
+
+        // limit position history
+        int needed = (BodyParts.Count + 1) * Gap;
+        if (PositionHistory.Count > needed)
+        {
+            PositionHistory.RemoveAt(PositionHistory.Count - 1);
+        }
+
         // move body parts
         if (isMoving)
         {
             int index = 1;
-            foreach (var body in BodyParts) {
-                Vector3 point = PositionHistory[Mathf.Min(index * Gap, PositionHistory.Count - 1)];
+            foreach (var body in BodyParts)
+            {
+                Vector3 point = PositionHistory[Mathf.Clamp(index * Gap, 0, PositionHistory.Count - 1)];
                 Vector3 moveDirection = point - body.transform.position;
                 body.transform.position += moveDirection * BodySpeed * Time.deltaTime;
                 body.transform.LookAt(point);
@@ -92,7 +99,8 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    private void GrowSnake() {
+    private void GrowSnake()
+    {
         GameObject body = Instantiate(BodyPrefab);
         BodyParts.Add(body);
     }
