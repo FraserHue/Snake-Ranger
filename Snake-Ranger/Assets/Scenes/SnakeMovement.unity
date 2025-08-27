@@ -780,10 +780,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d0bc3efae405a498b684c833753bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
-  SteerSpeed: 300
-  BodySpeed: 300
+  MoveSpeed: 5
+  SteerSpeed: 200
+  BodySpeed: 5
   Gap: 50
+  InitialSnakeLength: 10
   BodyPrefab: {fileID: 6693046508253087598, guid: c6621b8527a6f6e4dbcd16b925f4b55d, type: 3}
   AimSmoothTime: 0.001
   UseMouseControl: 1
