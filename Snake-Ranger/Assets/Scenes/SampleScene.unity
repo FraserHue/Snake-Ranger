@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_playerLayerMask:
     serializedVersion: 2
     m_Bits: 192
-  m_detectionRange: 8
+  m_detectionRange: 10
   m_detectionHeight: 1
   m_loseSightGrace: 0.5
   showDebugVisuals: 1
@@ -1442,6 +1442,7 @@ MonoBehaviour:
   - rid: 8522359228098675449
   - rid: 8522359228098675448
   - rid: 8522359228502115240
+  - rid: 8522359229933158865
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -1489,6 +1490,14 @@ MonoBehaviour:
         m_Value:
         - {fileID: 1180538352}
         - {fileID: 147639898}
+    - rid: 8522359229933158865
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 471917893351686490
+          m_Value1: 2728270103604071638
+        Name: AttackRange
+        m_Value: 6
 --- !u!136 &1319151540
 CapsuleCollider:
   m_ObjectHideFlags: 0
