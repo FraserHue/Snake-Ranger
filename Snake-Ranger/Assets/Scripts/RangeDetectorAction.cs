@@ -13,8 +13,14 @@ public partial class RangeDetectorAction : Action
 
     protected override Status OnUpdate()
     {
-        Player.Value = Detector.Value.UpdateDetector();
-        return Detector.Value.UpdateDetector() == null ? Status.Failure : Status.Success;
+        if (Detector?.Value == null) return Status.Failure;
+
+        var found = Detector.Value.UpdateDetector();
+
+        if (found != null)
+            Player.Value = found;
+
+        return found != null ? Status.Success : Status.Failure;
     }
 }
 
