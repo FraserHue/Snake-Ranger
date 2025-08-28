@@ -1,22 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using System.Collections;
 
-public class SimpleTopDownCaptureDrawer : MonoBehaviour
+public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
 {
-    public Material material;
+    // ---- Drawing ----
     public float cameraOffset = 0.6f;
     public float nearClipBuffer = 0.05f;
     public float lineWidth = 0.04f;
     public float minPointDistance = 0.02f;
-    public int maxPoints = 4096;
-    public bool closeLoopOnRelease = true;
+    public int   maxPoints = 4096;
+    public bool  closeLoopOnRelease = true;
     public float closeThreshold = 0.25f;
     public float groundY = 0f;
 
-    [Header("Capture")]
+    // ---- Capture ----
     public string enemyTag = "Enemy";
-    public bool requireClosedLoop = true;   // only apply damage if the loop was closed
+    public bool   requireClosedLoop = true;
+    public bool   hitContinuouslyWhileInside = true;
+    public float  hitInterval = 0.5f;      // seconds between hits per enemy (0 = every frame)
+
+    // ---- Auto clear ----
+    public float  autoClearDelay = 1f;     // seconds after release to clear (set 0 to keep)
+    Coroutine _clearCo;
 
     public IReadOnlyList<Vector3> VisualPoints => _visual;
     public IReadOnlyList<Vector3> GroundPoints => _ground;
@@ -26,22 +33,24 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
     Camera _cam;
     float _planeY;
     bool _isDrawing;
-    readonly List<Vector3> _visual = new List<Vector3>(512); // near-camera overlay
-    readonly List<Vector3> _ground = new List<Vector3>(512); // projected to y = groundY
+    bool _polygonActive;
+
+    readonly List<Vector3> _visual = new List<Vector3>(512);
+    readonly List<Vector3> _ground = new List<Vector3>(512);
+    readonly Dictionary<Transform, float> _nextHitTime = new Dictionary<Transform, float>();
+    static readonly List<Transform> _tmpToRemove = new List<Transform>(16);
 
     void Awake()
     {
         _lr = GetComponent<LineRenderer>();
         _cam = Camera.main;
 
-        if (material) _lr.material = material;
+        // Material is NOT set here; assign a URP material in the LineRenderer inspector.
         _lr.useWorldSpace = true;
         _lr.alignment = LineAlignment.View;
         _lr.textureMode = LineTextureMode.Stretch;
         _lr.shadowCastingMode = ShadowCastingMode.Off;
         _lr.receiveShadows = false;
-        _lr.startColor = Color.white;
-        _lr.endColor   = Color.white;
         _lr.startWidth = lineWidth;
         _lr.endWidth   = lineWidth;
         _lr.widthCurve = AnimationCurve.Constant(0f, 1f, lineWidth);
@@ -66,6 +75,9 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
                    Input.GetMouseButtonUp(0),
                    Input.mousePosition);
         }
+
+        if (!_isDrawing && _polygonActive && hitContinuouslyWhileInside)
+            TickDamage();
     }
 
     void UpdatePlaneY()
@@ -74,8 +86,8 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
         if (!_cam) return;
 
         float minOff = _cam.nearClipPlane + nearClipBuffer;
-        float used = Mathf.Max(cameraOffset, minOff);
-        _planeY = _cam.transform.position.y - used;
+        float used   = Mathf.Max(cameraOffset, minOff);
+        _planeY      = _cam.transform.position.y - used;
     }
 
     void Handle(bool down, bool held, bool up, Vector2 screen)
@@ -87,7 +99,13 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
 
     void Begin(Vector2 screen)
     {
+        // cancel any pending clear
+        if (_clearCo != null) { StopCoroutine(_clearCo); _clearCo = null; }
+
         _isDrawing = true;
+        _polygonActive = false;
+        _nextHitTime.Clear();
+
         _visual.Clear();
         _ground.Clear();
         _lr.loop = false;
@@ -99,19 +117,41 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
     {
         _isDrawing = false;
 
-        bool closedNow = false;
+        bool closed = false;
         if (closeLoopOnRelease && _visual.Count >= 3)
         {
             float d = Vector3.Distance(_visual[0], _visual[_visual.Count - 1]);
             if (d <= closeThreshold)
             {
                 _lr.loop = true;
-                closedNow = true;
+                closed = true;
             }
         }
 
-        if (_ground.Count >= 3 && (!requireClosedLoop || _lr.loop || closedNow))
-            CheckCaptures();
+        _polygonActive = _ground.Count >= 3 && (!requireClosedLoop || _lr.loop || closed);
+
+        if (_polygonActive) DoDamageOnce(); // immediate tick on release
+
+        // schedule clear
+        if (autoClearDelay > 0f)
+            _clearCo = StartCoroutine(AutoClearAfter(autoClearDelay));
+    }
+
+    IEnumerator AutoClearAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ClearStroke();
+        _clearCo = null;
+    }
+
+    void ClearStroke()
+    {
+        _visual.Clear();
+        _ground.Clear();
+        _lr.loop = false;
+        _lr.positionCount = 0;
+        _polygonActive = false;
+        _nextHitTime.Clear();
     }
 
     void Add(Vector2 screen, bool force = false)
@@ -140,14 +180,38 @@ public class SimpleTopDownCaptureDrawer : MonoBehaviour
         return p.Raycast(r, out float enter) ? r.GetPoint(enter) : Vector3.zero;
     }
 
-    void CheckCaptures()
+    // ---- Damage ----
+    void DoDamageOnce()
     {
         var enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            var e = enemies[i];
+        foreach (var e in enemies)
             if (PointInsidePolygonXZ(e.transform.position, _ground))
                 Debug.Log($"{e.name} took damage");
+    }
+
+    void TickDamage()
+    {
+        float now = Time.time;
+        var enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+
+        // clean nulls
+        _tmpToRemove.Clear();
+        foreach (var kvp in _nextHitTime)
+            if (kvp.Key == null) _tmpToRemove.Add(kvp.Key);
+        for (int i = 0; i < _tmpToRemove.Count; i++)
+            _nextHitTime.Remove(_tmpToRemove[i]);
+
+        foreach (var e in enemies)
+        {
+            var tr = e.transform;
+            if (!PointInsidePolygonXZ(tr.position, _ground)) continue;
+
+            if (!_nextHitTime.TryGetValue(tr, out float next)) next = 0f;
+            if (now >= next)
+            {
+                Debug.Log($"{e.name} took damage");
+                _nextHitTime[tr] = now + Mathf.Max(0f, hitInterval);
+            }
         }
     }
 

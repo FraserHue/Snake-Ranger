@@ -759,7 +759,7 @@ Transform:
   m_GameObject: {fileID: 1020880537}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.23418073, z: -0, w: 0.9721931}
-  m_LocalPosition: {x: 4.89, y: 0.176, z: -6.2}
+  m_LocalPosition: {x: 5.11, y: 0.176, z: -6.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -780,8 +780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d0bc3efae405a498b684c833753bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  SteerSpeed: 200
+  MoveSpeed: 7
+  SteerSpeed: 125
   BodySpeed: 5
   Gap: 50
   InitialSnakeLength: 10
@@ -818,7 +818,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.73643523, z: -0, w: 0.67650807}
   m_LocalPosition: {x: -0.06, y: 0, z: -0.67}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3494221, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1020880538}
@@ -927,7 +927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03794d7ef742ee54f8ee57def60237cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 28d4b21bd56421e4295fbf7d8ddf1082, type: 2}
   cameraOffset: 0.6
   nearClipBuffer: 0.05
   lineWidth: 0.06
@@ -938,6 +937,9 @@ MonoBehaviour:
   groundY: 0
   enemyTag: Enemy
   requireClosedLoop: 1
+  hitContinuouslyWhileInside: 1
+  hitInterval: 0.5
+  autoClearDelay: 1
 --- !u!120 &2043606364
 LineRenderer:
   serializedVersion: 2
