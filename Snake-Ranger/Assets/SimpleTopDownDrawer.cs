@@ -1,11 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using System.Collections;
 
-public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
+public class SimpleTopDownDrawer : MonoBehaviour
 {
-    // ---- Drawing ----
+    // --- Drawing plane & look ---
     public float cameraOffset = 0.6f;
     public float nearClipBuffer = 0.05f;
     public float lineWidth = 0.04f;
@@ -15,19 +15,13 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
     public float closeThreshold = 0.25f;
     public float groundY = 0f;
 
-    // ---- Capture ----
-    public string enemyTag = "Enemy";
-    public bool   requireClosedLoop = true;
-    public bool   hitContinuouslyWhileInside = true;
-    public float  hitInterval = 0.5f;      // seconds between hits per enemy (0 = every frame)
+    // --- Damage (one-time per stroke) ---
+    public int  damagePerHit = 10;
+    public bool requireClosedLoop = true;   // must release near start to count
 
-    // ---- Auto clear ----
-    public float  autoClearDelay = 1f;     // seconds after release to clear (set 0 to keep)
+    // --- Auto clear ---
+    public float  autoClearDelay = 1f;      // seconds (0 = keep the stroke)
     Coroutine _clearCo;
-
-    public IReadOnlyList<Vector3> VisualPoints => _visual;
-    public IReadOnlyList<Vector3> GroundPoints => _ground;
-    public bool IsDrawing => _isDrawing;
 
     LineRenderer _lr;
     Camera _cam;
@@ -35,17 +29,16 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
     bool _isDrawing;
     bool _polygonActive;
 
+    // Overlay points (near camera) + ground-projected points (y = groundY)
     readonly List<Vector3> _visual = new List<Vector3>(512);
     readonly List<Vector3> _ground = new List<Vector3>(512);
-    readonly Dictionary<Transform, float> _nextHitTime = new Dictionary<Transform, float>();
-    static readonly List<Transform> _tmpToRemove = new List<Transform>(16);
 
     void Awake()
     {
-        _lr = GetComponent<LineRenderer>();
+        _lr  = GetComponent<LineRenderer>();
         _cam = Camera.main;
 
-        // Material is NOT set here; assign a URP material in the LineRenderer inspector.
+        // Material/gradient are set in the LineRenderer inspector; not overridden here.
         _lr.useWorldSpace = true;
         _lr.alignment = LineAlignment.View;
         _lr.textureMode = LineTextureMode.Stretch;
@@ -75,9 +68,6 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
                    Input.GetMouseButtonUp(0),
                    Input.mousePosition);
         }
-
-        if (!_isDrawing && _polygonActive && hitContinuouslyWhileInside)
-            TickDamage();
     }
 
     void UpdatePlaneY()
@@ -99,17 +89,16 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
 
     void Begin(Vector2 screen)
     {
-        // cancel any pending clear
         if (_clearCo != null) { StopCoroutine(_clearCo); _clearCo = null; }
 
         _isDrawing = true;
         _polygonActive = false;
-        _nextHitTime.Clear();
 
         _visual.Clear();
         _ground.Clear();
         _lr.loop = false;
         _lr.positionCount = 0;
+
         Add(screen, true);
     }
 
@@ -130,9 +119,10 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
 
         _polygonActive = _ground.Count >= 3 && (!requireClosedLoop || _lr.loop || closed);
 
-        if (_polygonActive) DoDamageOnce(); // immediate tick on release
+        // ONE-TIME damage to each captured enemy this stroke
+        if (_polygonActive)
+            ApplyDamageOnceToCaptured();
 
-        // schedule clear
         if (autoClearDelay > 0f)
             _clearCo = StartCoroutine(AutoClearAfter(autoClearDelay));
     }
@@ -151,7 +141,6 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
         _lr.loop = false;
         _lr.positionCount = 0;
         _polygonActive = false;
-        _nextHitTime.Clear();
     }
 
     void Add(Vector2 screen, bool force = false)
@@ -180,38 +169,15 @@ public class SimpleTopDownCaptureDrawerRepeat : MonoBehaviour
         return p.Raycast(r, out float enter) ? r.GetPoint(enter) : Vector3.zero;
     }
 
-    // ---- Damage ----
-    void DoDamageOnce()
+    // --- One-time damage at stroke end ---
+    void ApplyDamageOnceToCaptured()
     {
-        var enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        foreach (var e in enemies)
-            if (PointInsidePolygonXZ(e.transform.position, _ground))
-                Debug.Log($"{e.name} took damage");
-    }
-
-    void TickDamage()
-    {
-        float now = Time.time;
-        var enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-
-        // clean nulls
-        _tmpToRemove.Clear();
-        foreach (var kvp in _nextHitTime)
-            if (kvp.Key == null) _tmpToRemove.Add(kvp.Key);
-        for (int i = 0; i < _tmpToRemove.Count; i++)
-            _nextHitTime.Remove(_tmpToRemove[i]);
-
+        var enemies = FindObjectsOfType<Enemy>();
         foreach (var e in enemies)
         {
-            var tr = e.transform;
-            if (!PointInsidePolygonXZ(tr.position, _ground)) continue;
-
-            if (!_nextHitTime.TryGetValue(tr, out float next)) next = 0f;
-            if (now >= next)
-            {
-                Debug.Log($"{e.name} took damage");
-                _nextHitTime[tr] = now + Mathf.Max(0f, hitInterval);
-            }
+            if (!e || e.IsDead) continue;
+            if (PointInsidePolygonXZ(e.transform.position, _ground))
+                e.TakeDamage(damagePerHit);
         }
     }
 
