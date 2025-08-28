@@ -775,7 +775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _debugMode: 1
-  _sceneToLoadAfterClickingPlay: SampleScene
+  _sceneToLoadAfterClickingPlay: BasicPlane
   _MainMenuContainer: {fileID: 1517161275}
   _CreditsMenuContainer: {fileID: 270158440}
   _SettingsMenuContainer: {fileID: 1411765001}
