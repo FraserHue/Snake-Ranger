@@ -5,6 +5,9 @@ using UnityEngine.Rendering;
 
 public class SimpleTopDownDrawer : MonoBehaviour
 {
+    [Header("References")]
+    public PlayerSnake player;
+
     // --- Drawing plane & look ---
     public float cameraOffset = 0.6f;
     public float nearClipBuffer = 0.05f;
@@ -37,6 +40,9 @@ public class SimpleTopDownDrawer : MonoBehaviour
     {
         _lr  = GetComponent<LineRenderer>();
         _cam = Camera.main;
+
+        if (player == null)
+            player = Object.FindFirstObjectByType<PlayerSnake>();
 
         // Material/gradient are set in the LineRenderer inspector; not overridden here.
         _lr.useWorldSpace = true;
@@ -172,12 +178,15 @@ public class SimpleTopDownDrawer : MonoBehaviour
     // --- One-time damage at stroke end ---
     void ApplyDamageOnceToCaptured()
     {
+        if (player == null) return;
+        float scaledDamage = damagePerHit * player.damageMultiplier;
         var enemies = FindObjectsOfType<Enemy>();
+
         foreach (var e in enemies)
         {
             if (!e || e.IsDead) continue;
             if (PointInsidePolygonXZ(e.transform.position, _ground))
-                e.TakeDamage(damagePerHit);
+                e.TakeDamage(Mathf.RoundToInt(scaledDamage));
         }
     }
 

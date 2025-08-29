@@ -5,9 +5,10 @@ using UnityEngine;
 public class SnakeController : MonoBehaviour
 {
 
-    public float MoveSpeed = 5f;
+    [Header("References")]
+    public PlayerSnake playerStats;
+
     public float SteerSpeed = 300f;
-    public int BodySpeed = 5;
     public int Gap = 10;
     public int InitialSnakeLength = 10;
 
@@ -30,6 +31,9 @@ public class SnakeController : MonoBehaviour
     {
         for (int i = 0; i < InitialSnakeLength; i++) GrowSnake();
         aimPoint = transform.position;
+
+        if (playerStats == null)
+            playerStats = Object.FindFirstObjectByType<PlayerSnake>();
     }
 
     void Update()
@@ -39,8 +43,8 @@ public class SnakeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
         // forward movement
-        if (isMoving)
-            transform.position += transform.forward * MoveSpeed * Time.deltaTime;
+        if (isMoving && playerStats != null)
+            transform.position += transform.forward * playerStats.moveSpeed * Time.deltaTime;
 
         // steering
         if (isMoving)
@@ -92,7 +96,8 @@ public class SnakeController : MonoBehaviour
             {
                 Vector3 point = PositionHistory[Mathf.Clamp(index * Gap, 0, PositionHistory.Count - 1)];
                 Vector3 moveDirection = point - body.transform.position;
-                body.transform.position += moveDirection * BodySpeed * Time.deltaTime;
+                // BodySpeed (Making it the same as player speed)
+                body.transform.position += moveDirection * playerStats.moveSpeed * Time.deltaTime;
                 body.transform.LookAt(point);
                 index++;
             }
