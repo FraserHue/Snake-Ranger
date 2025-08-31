@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 438154201}
   - component: {fileID: 438154200}
   - component: {fileID: 438154199}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -717,7 +717,7 @@ GameObject:
   - component: {fileID: 611241585}
   - component: {fileID: 611241584}
   - component: {fileID: 611241583}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -995,7 +995,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 692111624}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 692404551}
   - component: {fileID: 692404550}
   - component: {fileID: 692404549}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1138,7 @@ GameObject:
   - component: {fileID: 909900744}
   - component: {fileID: 909900743}
   - component: {fileID: 909900742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1246,7 +1246,7 @@ GameObject:
   - component: {fileID: 963351333}
   - component: {fileID: 963351332}
   - component: {fileID: 963351331}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1355,7 +1355,7 @@ GameObject:
   - component: {fileID: 1475266336}
   - component: {fileID: 1475266335}
   - component: {fileID: 1475266334}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1904,9 +1904,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 1786184508}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
   SteerSpeed: 125
   Gap: 50
   InitialSnakeLength: 10
+  collisionCheckDistance: 0.5
+  pushBackDistance: 0.5
   BodyPrefab: {fileID: 6693046508253087598, guid: c6621b8527a6f6e4dbcd16b925f4b55d, type: 3}
   AimSmoothTime: 0.001
   UseMouseControl: 1
@@ -2186,7 +2191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2081199081}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}

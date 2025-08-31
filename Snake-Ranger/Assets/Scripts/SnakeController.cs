@@ -7,10 +7,14 @@ public class SnakeController : MonoBehaviour
 
     [Header("References")]
     public PlayerSnake playerStats;
+    public LayerMask obstacleMask;
 
     public float SteerSpeed = 300f;
     public int Gap = 10;
     public int InitialSnakeLength = 10;
+    public float collisionCheckDistance = 0.05f;
+    public float pushBackDistance = 0.5f;
+
 
     public GameObject BodyPrefab;
 
@@ -44,7 +48,39 @@ public class SnakeController : MonoBehaviour
 
         // forward movement
         if (isMoving && playerStats != null)
-            transform.position += transform.forward * playerStats.moveSpeed * Time.deltaTime;
+        {
+            Vector3 moveDir = transform.forward;
+            Vector3 nextPos = transform.position + moveDir * playerStats.moveSpeed * Time.deltaTime;
+
+            // Check if wall ahead
+            if (Physics.Raycast(transform.position, moveDir, out RaycastHit hit, collisionCheckDistance, obstacleMask))
+            {
+                // Damage on hit
+                playerStats.currentHealth -= 1;
+                Debug.Log("Snake hit obstacle! Health: " + playerStats.currentHealth);
+
+                // Reflect movement direction (bounce)
+                Vector3 reflectDir = Vector3.Reflect(moveDir, hit.normal);
+                reflectDir.y = 0f;
+
+                // Push slightly away so it doesn't stick
+                transform.position = hit.point + hit.normal * pushBackDistance;
+
+                // Rotate snake to face new reflected direction
+                transform.rotation = Quaternion.LookRotation(reflectDir, Vector3.up);
+
+                if (playerStats.currentHealth <= 0)
+                {
+                    Debug.Log("Snake died!");
+                    isMoving = false;
+                }
+            }
+            else
+            {
+                // Normal forward movement
+                transform.position = nextPos;
+            }
+        }
 
         // steering
         if (isMoving)
