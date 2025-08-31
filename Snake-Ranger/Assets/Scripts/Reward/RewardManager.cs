@@ -22,6 +22,15 @@ public class RewardManager : MonoBehaviour
     private Queue<int> pendingLevels = new Queue<int>();
     private bool showingRewards = false;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        var audioObj = GameObject.FindGameObjectWithTag("Audio");
+        if (audioObj != null) audioManager = audioObj.GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         if (XPManager.Instance != null)
@@ -38,7 +47,11 @@ public class RewardManager : MonoBehaviour
     {
         pendingLevels.Enqueue(newLevel);
         if (!showingRewards)
+        {
+            audioManager.PlaySFX(audioManager.levelUp);
             ShowNextReward();
+
+        }
     }
 
     private void ShowNextReward()
