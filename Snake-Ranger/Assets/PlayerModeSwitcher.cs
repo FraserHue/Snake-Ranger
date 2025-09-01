@@ -6,8 +6,8 @@ public class PlayerModeSwitcher : MonoBehaviour
 {
     public enum Mode { Movement, Combat }
 
-    public MonoBehaviour snakeController;          // expects SnakeController
-    public MonoBehaviour lineDrawer;               // expects SimpleTopDownDrawer
+    public MonoBehaviour snakeController;          
+    public MonoBehaviour lineDrawer;               
     public LineRenderer drawerLineRenderer;
     public Camera targetCamera;
 
@@ -34,12 +34,10 @@ public class PlayerModeSwitcher : MonoBehaviour
     {
         Instance = this;
 
-        // Auto-wire common refs if not set in inspector
         if (snakeController == null) snakeController = FindObjectOfType<SnakeController>();
         if (lineDrawer == null)
         {
             var foundDrawer = FindObjectOfType<MonoBehaviour>();
-            // Prefer a component actually named SimpleTopDownDrawer if present
             var drawerTyped = FindObjectOfType<SimpleTopDownDrawer>();
             if (drawerTyped != null) lineDrawer = drawerTyped;
         }
@@ -73,7 +71,6 @@ public class PlayerModeSwitcher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             ToggleMode();
 
-        // manual stop/resume passthrough
         if (Input.GetKeyDown(KeyCode.S)) SetIsMoving(false);
         if (Input.GetKeyDown(KeyCode.W)) SetIsMoving(true);
     }
@@ -89,13 +86,13 @@ public class PlayerModeSwitcher : MonoBehaviour
 
         if (mode == Mode.Movement)
         {
-            SetIsMoving(true);        // ensure snake actually moves
-            SetDrawerEnabled(false);  // hide/clear line & stop drawing
+            SetIsMoving(true);        
+            SetDrawerEnabled(false);  
             SmoothRestoreCameraView();
         }
         else
         {
-            SetIsMoving(false);       // hard-stop for precision drawing
+            SetIsMoving(false);      
             SetDrawerEnabled(true);
             ApplyCombatCameraViewSmooth();
         }
@@ -108,11 +105,10 @@ public class PlayerModeSwitcher : MonoBehaviour
         if (drawerLineRenderer != null)
         {
             drawerLineRenderer.enabled = enabled;
-            if (!enabled) drawerLineRenderer.positionCount = 0; // clear any active stroke
+            if (!enabled) drawerLineRenderer.positionCount = 0; 
         }
     }
 
-    // -------- Camera helpers --------
     void ApplyCombatCameraViewSmooth()
     {
         if (targetCamera == null) return;
@@ -184,7 +180,6 @@ public class PlayerModeSwitcher : MonoBehaviour
         _zoomCo = null;
     }
 
-    // -------- Kill hooks: ALWAYS force Movement on kill --------
     public static void NotifyEnemyKilled()
     {
         if (Instance != null) Instance.OnEnemyKilled();
@@ -192,17 +187,15 @@ public class PlayerModeSwitcher : MonoBehaviour
 
     public void OnEnemyKilled()
     {
-        ApplyMode(Mode.Movement);  // guarantees unfreeze + exit combat visuals
+        ApplyMode(Mode.Movement);  
     }
 
-    // -------- SnakeController hooks (reflection-friendly) --------
     void SetIsMoving(bool value)
     {
         if (snakeController == null) return;
 
         var t = snakeController.GetType();
 
-        // Prefer a public property named IsMoving if it exists
         var p = t.GetProperty("IsMoving", BindingFlags.Public | BindingFlags.Instance);
         if (p != null && p.CanWrite)
         {
@@ -210,7 +203,6 @@ public class PlayerModeSwitcher : MonoBehaviour
             return;
         }
 
-        // Otherwise set the private field 'isMoving'
         var f = t.GetField("isMoving", BindingFlags.Instance | BindingFlags.NonPublic);
         if (f != null)
         {

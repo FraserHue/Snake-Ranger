@@ -11,17 +11,14 @@ public class SimpleTopDownDrawer : MonoBehaviour
     public float minPointDistance = 0.02f;
     public int   maxPoints = 4096;
 
-    [Header("Loop + close logic")]
-    public bool  closeLoopOnRelease = true;   // still supported on mouse up
-    public bool  loopWhileHeld = true;        // NEW: close/apply while holding when near start
+    public bool  closeLoopOnRelease = true;   
+    public bool  loopWhileHeld = true;        
     public float closeThreshold = 0.25f;
     public float groundY = 0f;
 
-    [Header("Damage")]
     public int  damagePerHit = 10;
     public bool requireClosedLoop = true;
 
-    [Header("Auto clear after final release")]
     public float  autoClearDelay = 1f;
     Coroutine _clearCo;
 
@@ -183,11 +180,8 @@ public class SimpleTopDownDrawer : MonoBehaviour
         {
             ApplyDamageOnceToCaptured();
 
-            // If an enemy death ended drawing, bail out.
             if (!_isDrawing) return;
 
-            // Prep for next loop without releasing mouse:
-            // Keep drawing active; clear the stroke and seed with current point.
             _visual.Clear();
             _ground.Clear();
             _lr.loop = false;
@@ -232,7 +226,7 @@ public class SimpleTopDownDrawer : MonoBehaviour
                 {
                     snake.TriggerLunge();
                     PlayerModeSwitcher.NotifyEnemyKilled();
-                    _isDrawing = false;   // stop continuous chaining on kill
+                    _isDrawing = false;   
                     ClearStroke();
                 }
             }
