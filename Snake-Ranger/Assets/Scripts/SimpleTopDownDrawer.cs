@@ -5,22 +5,21 @@ using UnityEngine.Rendering;
 
 public class SimpleTopDownDrawer : MonoBehaviour
 {
-    // --- Drawing plane & look ---
     public float cameraOffset = 0.6f;
     public float nearClipBuffer = 0.05f;
     public float lineWidth = 0.04f;
     public float minPointDistance = 0.02f;
     public int   maxPoints = 4096;
+
     public bool  closeLoopOnRelease = true;
+    public bool  loopWhileHeld = true;
     public float closeThreshold = 0.25f;
     public float groundY = 0f;
 
-    // --- Damage (one-time per stroke) ---
-    public int  damagePerHit = 10;
-    public bool requireClosedLoop = true;   // must release near start to count
+    public int damagePerHit = 10;
+    public bool requireClosedLoop = true;
 
-    // --- Auto clear ---
-    public float  autoClearDelay = 1f;      // seconds (0 = keep the stroke)
+    public float autoClearDelay = 1f;
     Coroutine _clearCo;
 
     LineRenderer _lr;
@@ -29,16 +28,18 @@ public class SimpleTopDownDrawer : MonoBehaviour
     bool _isDrawing;
     bool _polygonActive;
 
-    // Overlay points (near camera) + ground-projected points (y = groundY)
     readonly List<Vector3> _visual = new List<Vector3>(512);
     readonly List<Vector3> _ground = new List<Vector3>(512);
+
+    [SerializeField] SnakeController snake;
+
+    [SerializeField] private Transform pfDamagePopup;
 
     void Awake()
     {
         _lr  = GetComponent<LineRenderer>();
         _cam = Camera.main;
 
-        // Material/gradient are set in the LineRenderer inspector; not overridden here.
         _lr.useWorldSpace = true;
         _lr.alignment = LineAlignment.View;
         _lr.textureMode = LineTextureMode.Stretch;
@@ -47,6 +48,11 @@ public class SimpleTopDownDrawer : MonoBehaviour
         _lr.startWidth = lineWidth;
         _lr.endWidth   = lineWidth;
         _lr.widthCurve = AnimationCurve.Constant(0f, 1f, lineWidth);
+
+        if (!snake) snake = FindObjectOfType<SnakeController>();
+
+        // set popup prefab once for create(...)
+        if (pfDamagePopup != null) DamagePopup.SetPrefab(pfDamagePopup);
     }
 
     void Update()
@@ -119,12 +125,13 @@ public class SimpleTopDownDrawer : MonoBehaviour
 
         _polygonActive = _ground.Count >= 3 && (!requireClosedLoop || _lr.loop || closed);
 
-        // ONE-TIME damage to each captured enemy this stroke
         if (_polygonActive)
             ApplyDamageOnceToCaptured();
 
         if (autoClearDelay > 0f)
             _clearCo = StartCoroutine(AutoClearAfter(autoClearDelay));
+        else
+            ClearStroke();
     }
 
     IEnumerator AutoClearAfter(float delay)
@@ -147,15 +154,49 @@ public class SimpleTopDownDrawer : MonoBehaviour
     {
         if (_visual.Count >= maxPoints) return;
 
-        Vector3 v = ScreenToPlaneY(screen, _planeY);
+        Vector3 vWorld = ScreenToPlaneY(screen, _planeY);
         if (force || _visual.Count == 0 ||
-            Vector3.Distance(_visual[_visual.Count - 1], v) >= minPointDistance)
+            Vector3.Distance(_visual[_visual.Count - 1], vWorld) >= minPointDistance)
         {
-            _visual.Add(v);
+            _visual.Add(vWorld);
             _lr.positionCount = _visual.Count;
-            _lr.SetPosition(_visual.Count - 1, v);
+            _lr.SetPosition(_visual.Count - 1, vWorld);
 
             _ground.Add(ScreenToPlaneY(screen, groundY));
+
+            if (loopWhileHeld)
+            {
+                TryCompleteLoopWhileHeld(vWorld);
+            }
+        }
+    }
+
+    void TryCompleteLoopWhileHeld(Vector3 latestWorldPoint)
+    {
+        if (_visual.Count < 3) return;
+
+        float d = Vector3.Distance(_visual[0], latestWorldPoint);
+        if (d > closeThreshold) return;
+
+        _lr.loop = true;
+        _polygonActive = _ground.Count >= 3 && (!requireClosedLoop || _lr.loop);
+
+        if (_polygonActive)
+        {
+            ApplyDamageOnceToCaptured();
+
+            if (!_isDrawing) return;
+
+            _visual.Clear();
+            _ground.Clear();
+            _lr.loop = false;
+            _lr.positionCount = 0;
+
+            _visual.Add(latestWorldPoint);
+            _ground.Add(new Vector3(latestWorldPoint.x, groundY, latestWorldPoint.z));
+            _lr.positionCount = 1;
+            _lr.SetPosition(0, latestWorldPoint);
+            _polygonActive = false;
         }
     }
 
@@ -169,15 +210,47 @@ public class SimpleTopDownDrawer : MonoBehaviour
         return p.Raycast(r, out float enter) ? r.GetPoint(enter) : Vector3.zero;
     }
 
-    // --- One-time damage at stroke end ---
+    // get top-of-enemy position from bounds
+    Vector3 GetPopupPos(Enemy e)
+    {
+        var col = e.GetComponentInChildren<Collider>();
+        if (col) return new Vector3(col.bounds.center.x, col.bounds.max.y, col.bounds.center.z);
+
+        var rend = e.GetComponentInChildren<Renderer>();
+        if (rend) return new Vector3(rend.bounds.center.x, rend.bounds.max.y, rend.bounds.center.z);
+
+        return e.transform.position;
+    }
+
     void ApplyDamageOnceToCaptured()
     {
         var enemies = FindObjectsOfType<Enemy>();
         foreach (var e in enemies)
         {
             if (!e || e.IsDead) continue;
+
             if (PointInsidePolygonXZ(e.transform.position, _ground))
+            {
+                int before = e.CurrentHealth;
                 e.TakeDamage(damagePerHit);
+
+                int dealt = Mathf.Min(before, damagePerHit);
+
+                // spawn exactly above enemy using bounds
+                if (pfDamagePopup != null && dealt > 0)
+                {
+                    var pos = GetPopupPos(e);
+                    DamagePopup.Create(pos, dealt, false);
+                }
+
+                if (e.IsDead && snake)
+                {
+                    snake.TriggerLunge();
+                    PlayerModeSwitcher.NotifyEnemyKilled();
+                    _isDrawing = false;
+                    ClearStroke();
+                }
+            }
         }
     }
 

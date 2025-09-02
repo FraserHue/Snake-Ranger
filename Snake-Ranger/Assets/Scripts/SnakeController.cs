@@ -1,10 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class SnakeController : MonoBehaviour
 {
-
     public float MoveSpeed = 5f;
     public float SteerSpeed = 300f;
     public int BodySpeed = 5;
@@ -13,8 +11,8 @@ public class SnakeController : MonoBehaviour
 
     public GameObject BodyPrefab;
 
-    private List<GameObject> BodyParts = new List<GameObject>();
-    private List<Vector3> PositionHistory = new List<Vector3>();
+    private readonly List<GameObject> BodyParts = new List<GameObject>();
+    private readonly List<Vector3> PositionHistory = new List<Vector3>();
 
     public float AimSmoothTime = 0.06f;
     private Vector3 aimPoint;
@@ -25,25 +23,50 @@ public class SnakeController : MonoBehaviour
     public bool UseMouseControl = true;
     public bool UseADControl = true;
 
+    // Lunge + i-frames
+    public float LungeSpeed = 25f;
+    public float LungeDuration = 0.2f;
+    public float InvincibilityDuration = 0.5f;
+
+    private float lungeTimeRemaining = 0f;
+    private bool isInvincible = false;
+
+    public bool IsInvincible => isInvincible;
 
     void Start()
     {
         for (int i = 0; i < InitialSnakeLength; i++) GrowSnake();
         aimPoint = transform.position;
     }
+    
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.S)) isMoving = false;
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
-        // forward movement
-        if (isMoving)
-            transform.position += transform.forward * MoveSpeed * Time.deltaTime;
+        bool lungeActive = lungeTimeRemaining > 0f;
 
-        // steering
+        Vector3 totalMove = Vector3.zero;
+
+        if (lungeActive)
+        {
+            totalMove += transform.forward * LungeSpeed * Time.deltaTime;
+            lungeTimeRemaining -= Time.deltaTime;
+            if (lungeTimeRemaining < 0f) lungeTimeRemaining = 0f;
+        }
+
         if (isMoving)
+        {
+            totalMove += transform.forward * MoveSpeed * Time.deltaTime;
+        }
+
+        if (totalMove.sqrMagnitude > 0f)
+        {
+            transform.position += totalMove;
+        }
+
+        if (isMoving || lungeActive)
         {
             if (UseMouseControl)
             {
@@ -72,20 +95,18 @@ public class SnakeController : MonoBehaviour
             }
         }
 
-        // store position history
-        if (isMoving)
+        if (isMoving || lungeActive)
+        {
             PositionHistory.Insert(0, transform.position);
+        }
 
-
-        // limit position history
         int needed = (BodyParts.Count + 1) * Gap;
         if (PositionHistory.Count > needed)
         {
             PositionHistory.RemoveAt(PositionHistory.Count - 1);
         }
 
-        // move body parts
-        if (isMoving)
+        if (isMoving || lungeActive)
         {
             int index = 1;
             foreach (var body in BodyParts)
@@ -103,5 +124,18 @@ public class SnakeController : MonoBehaviour
     {
         GameObject body = Instantiate(BodyPrefab);
         BodyParts.Add(body);
+    }
+
+    public void TriggerLunge()
+    {
+        lungeTimeRemaining = Mathf.Max(lungeTimeRemaining, LungeDuration);
+        if (!isInvincible) StartCoroutine(InvincibilityWindow(InvincibilityDuration));
+    }
+
+    System.Collections.IEnumerator InvincibilityWindow(float duration)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(duration);
+        isInvincible = false;
     }
 }
