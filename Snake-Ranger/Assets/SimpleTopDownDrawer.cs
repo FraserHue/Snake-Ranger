@@ -11,15 +11,15 @@ public class SimpleTopDownDrawer : MonoBehaviour
     public float minPointDistance = 0.02f;
     public int   maxPoints = 4096;
 
-    public bool  closeLoopOnRelease = true;   
-    public bool  loopWhileHeld = true;        
+    public bool  closeLoopOnRelease = true;
+    public bool  loopWhileHeld = true;
     public float closeThreshold = 0.25f;
     public float groundY = 0f;
 
-    public int  damagePerHit = 10;
+    public int damagePerHit = 10;
     public bool requireClosedLoop = true;
 
-    public float  autoClearDelay = 1f;
+    public float autoClearDelay = 1f;
     Coroutine _clearCo;
 
     LineRenderer _lr;
@@ -32,6 +32,8 @@ public class SimpleTopDownDrawer : MonoBehaviour
     readonly List<Vector3> _ground = new List<Vector3>(512);
 
     [SerializeField] SnakeController snake;
+
+    [SerializeField] private Transform pfDamagePopup;
 
     void Awake()
     {
@@ -48,6 +50,9 @@ public class SimpleTopDownDrawer : MonoBehaviour
         _lr.widthCurve = AnimationCurve.Constant(0f, 1f, lineWidth);
 
         if (!snake) snake = FindObjectOfType<SnakeController>();
+
+        // set popup prefab once for create(...)
+        if (pfDamagePopup != null) DamagePopup.SetPrefab(pfDamagePopup);
     }
 
     void Update()
@@ -205,6 +210,18 @@ public class SimpleTopDownDrawer : MonoBehaviour
         return p.Raycast(r, out float enter) ? r.GetPoint(enter) : Vector3.zero;
     }
 
+    // get top-of-enemy position from bounds
+    Vector3 GetPopupPos(Enemy e)
+    {
+        var col = e.GetComponentInChildren<Collider>();
+        if (col) return new Vector3(col.bounds.center.x, col.bounds.max.y, col.bounds.center.z);
+
+        var rend = e.GetComponentInChildren<Renderer>();
+        if (rend) return new Vector3(rend.bounds.center.x, rend.bounds.max.y, rend.bounds.center.z);
+
+        return e.transform.position;
+    }
+
     void ApplyDamageOnceToCaptured()
     {
         var enemies = FindObjectsOfType<Enemy>();
@@ -217,16 +234,20 @@ public class SimpleTopDownDrawer : MonoBehaviour
                 int before = e.CurrentHealth;
                 e.TakeDamage(damagePerHit);
 
-                if (!e.IsDead && before > 0 && e.CurrentHealth <= 0)
+                int dealt = Mathf.Min(before, damagePerHit);
+
+                // spawn exactly above enemy using bounds
+                if (pfDamagePopup != null && dealt > 0)
                 {
-                    // hook if you want
+                    var pos = GetPopupPos(e);
+                    DamagePopup.Create(pos, dealt, false);
                 }
 
                 if (e.IsDead && snake)
                 {
                     snake.TriggerLunge();
                     PlayerModeSwitcher.NotifyEnemyKilled();
-                    _isDrawing = false;   
+                    _isDrawing = false;
                     ClearStroke();
                 }
             }
