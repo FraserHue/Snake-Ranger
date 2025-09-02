@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 149227797}
+  - component: {fileID: 149227798}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -151,6 +152,38 @@ Transform:
   - {fileID: 1260498038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &149227798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149227796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: e6308282e67b1664c9bc6fcc9e4d67f5, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &153224189
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +292,7 @@ GameObject:
   - component: {fileID: 428658391}
   - component: {fileID: 428658390}
   - component: {fileID: 428658389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tooth2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -367,7 +400,7 @@ GameObject:
   - component: {fileID: 443884538}
   - component: {fileID: 443884537}
   - component: {fileID: 443884536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tooth1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -848,7 +881,7 @@ GameObject:
   - component: {fileID: 1231232466}
   - component: {fileID: 1231232465}
   - component: {fileID: 1231232464}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1072,7 +1105,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -1230,6 +1263,7 @@ GameObject:
   - component: {fileID: 1391074754}
   - component: {fileID: 1391074753}
   - component: {fileID: 1391074752}
+  - component: {fileID: 1391074755}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Enemy
@@ -1441,8 +1475,30 @@ MonoBehaviour:
           m_Value1: 12143274043655801944
         Name: SpiderPatrolPoints
         m_Value:
-        - {fileID: 220800746}
         - {fileID: 153224189}
+        - {fileID: 220800746}
+--- !u!195 &1391074755
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391074746}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1473938448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,7 +1672,8 @@ GameObject:
   - component: {fileID: 1602786134}
   - component: {fileID: 1602786133}
   - component: {fileID: 1602786132}
-  m_Layer: 0
+  - component: {fileID: 1602786135}
+  m_Layer: 6
   m_Name: Snake
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1689,6 +1746,27 @@ Transform:
   - {fileID: 428658388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -387.087, z: 0}
+--- !u!65 &1602786135
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602786131}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1603886225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,6 +2113,7 @@ GameObject:
   - component: {fileID: 2139461670}
   - component: {fileID: 2139461669}
   - component: {fileID: 2139461668}
+  - component: {fileID: 2139461671}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -2246,8 +2325,30 @@ MonoBehaviour:
           m_Value1: 4248658980937254040
         Name: PatrolPoints
         m_Value:
-        - {fileID: 220800746}
         - {fileID: 153224189}
+        - {fileID: 220800746}
+--- !u!195 &2139461671
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139461662}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
