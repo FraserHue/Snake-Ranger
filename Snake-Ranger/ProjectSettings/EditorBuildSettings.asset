@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BasicPlane.unity
     guid: 59495467807f0de41a76560833d808d7
+  - enabled: 1
+    path: Assets/Scenes/Stage1Scene.unity
+    guid: 313c7efc2af8af043b62a2ccdde06995
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

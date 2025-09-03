@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_playerLayerMask:
     serializedVersion: 2
     m_Bits: 192
-  m_detectionRange: 10
+  m_detectionRange: 25
   m_detectionHeight: 1
   m_loseSightGrace: 0.5
   showDebugVisuals: 1
@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_playerLayerMask:
     serializedVersion: 2
     m_Bits: 192
-  m_detectionRange: 10
+  m_detectionRange: 25
   m_detectionHeight: 1
   m_loseSightGrace: 0.5
   showDebugVisuals: 1
