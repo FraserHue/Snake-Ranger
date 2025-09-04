@@ -192,11 +192,8 @@ public class PlayerModeSwitcher : MonoBehaviour
 
     public void OnEnemyKilled()
     {
-        // Grant a lunge charge, do NOT lunge here.
+        if (snakeStatus == null) snakeStatus = FindObjectOfType<SnakeStatus>();
         if (snakeStatus != null) snakeStatus.OnEnemyKilled();
-
-        // Keep your existing behavior of returning to movement after a kill.
-        ApplyMode(Mode.Movement);
     }
 
     void SetIsMoving(bool value)

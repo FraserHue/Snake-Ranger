@@ -34129,7 +34129,7 @@ MonoBehaviour:
   orthoAtMinLen: 5
   orthoAtMaxLen: 18
   currentMode: 0
-  snakeStatus: {fileID: 0}
+  snakeStatus: {fileID: 1602786136}
 --- !u!114 &1602786133
 MonoBehaviour:
   m_ObjectHideFlags: 0

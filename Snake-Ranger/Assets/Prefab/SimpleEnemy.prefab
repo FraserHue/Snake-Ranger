@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b124a0ea2c737f4787bc75da8773b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 90
-  currentHealth: 90
+  maxHealth: 30
+  currentHealth: 30
   despawnDelay: 0
 --- !u!114 &7951642763368249899
 MonoBehaviour:
