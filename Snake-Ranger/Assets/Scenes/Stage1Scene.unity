@@ -34129,6 +34129,7 @@ MonoBehaviour:
   orthoAtMinLen: 5
   orthoAtMaxLen: 18
   currentMode: 0
+  snakeStatus: {fileID: 0}
 --- !u!114 &1602786133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34217,7 +34218,7 @@ MonoBehaviour:
   currentHealth: 50
   moveSpeed: 5
   length: 10
-  maxLungeCharges: 99
+  maxLungeCharges: 999
   lungeCooldown: 3
 --- !u!4 &1603108814 stripped
 Transform:
