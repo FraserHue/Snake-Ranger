@@ -44628,6 +44628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5373521051523785344, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7951642763368249899, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
       propertyPath: managedReferences[1067926058458153027].m_Value
       value: 
