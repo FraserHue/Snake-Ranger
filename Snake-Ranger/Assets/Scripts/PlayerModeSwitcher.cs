@@ -6,8 +6,8 @@ public class PlayerModeSwitcher : MonoBehaviour
 {
     public enum Mode { Movement, Combat }
 
-    public MonoBehaviour snakeController;          
-    public MonoBehaviour lineDrawer;               
+    public MonoBehaviour snakeController;
+    public MonoBehaviour lineDrawer;
     public LineRenderer drawerLineRenderer;
     public Camera targetCamera;
 
@@ -29,6 +29,9 @@ public class PlayerModeSwitcher : MonoBehaviour
     Coroutine _zoomCo;
 
     public static PlayerModeSwitcher Instance { get; private set; }
+
+    // NEW: cache SnakeStatus to grant lunge charges (no auto-lunge)
+    [SerializeField] private SnakeStatus snakeStatus;
 
     void Awake()
     {
@@ -54,6 +57,8 @@ public class PlayerModeSwitcher : MonoBehaviour
             if (targetCamera.orthographic) _defaultOrtho = targetCamera.orthographicSize;
             else _defaultFOV = targetCamera.fieldOfView;
         }
+
+        if (snakeStatus == null) snakeStatus = FindObjectOfType<SnakeStatus>();
     }
 
     void OnDestroy()
@@ -86,13 +91,13 @@ public class PlayerModeSwitcher : MonoBehaviour
 
         if (mode == Mode.Movement)
         {
-            SetIsMoving(true);        
-            SetDrawerEnabled(false);  
+            SetIsMoving(true);
+            SetDrawerEnabled(false);
             SmoothRestoreCameraView();
         }
         else
         {
-            SetIsMoving(false);      
+            SetIsMoving(false);
             SetDrawerEnabled(true);
             ApplyCombatCameraViewSmooth();
         }
@@ -105,7 +110,7 @@ public class PlayerModeSwitcher : MonoBehaviour
         if (drawerLineRenderer != null)
         {
             drawerLineRenderer.enabled = enabled;
-            if (!enabled) drawerLineRenderer.positionCount = 0; 
+            if (!enabled) drawerLineRenderer.positionCount = 0;
         }
     }
 
@@ -187,7 +192,11 @@ public class PlayerModeSwitcher : MonoBehaviour
 
     public void OnEnemyKilled()
     {
-        ApplyMode(Mode.Movement);  
+        // Grant a lunge charge, do NOT lunge here.
+        if (snakeStatus != null) snakeStatus.OnEnemyKilled();
+
+        // Keep your existing behavior of returning to movement after a kill.
+        ApplyMode(Mode.Movement);
     }
 
     void SetIsMoving(bool value)

@@ -51,7 +51,6 @@ public class SimpleTopDownDrawer : MonoBehaviour
 
         if (!snake) snake = FindObjectOfType<SnakeController>();
 
-        // set popup prefab once for create(...)
         if (pfDamagePopup != null) DamagePopup.SetPrefab(pfDamagePopup);
     }
 
@@ -210,7 +209,6 @@ public class SimpleTopDownDrawer : MonoBehaviour
         return p.Raycast(r, out float enter) ? r.GetPoint(enter) : Vector3.zero;
     }
 
-    // get top-of-enemy position from bounds
     Vector3 GetPopupPos(Enemy e)
     {
         var col = e.GetComponentInChildren<Collider>();
@@ -236,17 +234,19 @@ public class SimpleTopDownDrawer : MonoBehaviour
 
                 int dealt = Mathf.Min(before, damagePerHit);
 
-                // spawn exactly above enemy using bounds
                 if (pfDamagePopup != null && dealt > 0)
                 {
                     var pos = GetPopupPos(e);
                     DamagePopup.Create(pos, dealt, false);
                 }
 
-                if (e.IsDead && snake)
+                if (e.IsDead)
                 {
-                    snake.TriggerLunge();
+                    SnakeStatus status = (snake ? snake.GetComponent<SnakeStatus>() : null) ?? FindObjectOfType<SnakeStatus>();
+                    if (status != null) status.OnEnemyKilled();
+
                     PlayerModeSwitcher.NotifyEnemyKilled();
+
                     _isDrawing = false;
                     ClearStroke();
                 }

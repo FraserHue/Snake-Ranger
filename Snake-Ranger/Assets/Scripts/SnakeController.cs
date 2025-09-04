@@ -72,9 +72,7 @@ public class SnakeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
         if (Input.GetMouseButtonDown(1) && _status != null && _status.TryConsumeLunge())
-        {
             TriggerLunge();
-        }
 
         bool lungeActive = lungeTimeRemaining > 0f;
         Vector3 totalMove = Vector3.zero;
