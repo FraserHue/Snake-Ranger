@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 30;
     [SerializeField] private int currentHealth = 30;
-    [SerializeField] private float despawnDelay = 0f; // 0 = instant
+    [SerializeField] private float despawnDelay = 0f; 
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
@@ -12,10 +12,10 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        // Clamp starting values
         maxHealth = Mathf.Max(1, maxHealth);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         IsDead = currentHealth <= 0;
+        if (IsDead) Die(); 
     }
 
     public void TakeDamage(int amount)
@@ -24,24 +24,29 @@ public class Enemy : MonoBehaviour
         if (amount <= 0) return;
 
         currentHealth = Mathf.Max(0, currentHealth - amount);
-        Debug.Log($"Enemy '{name}' took {amount} damage ({currentHealth}/{maxHealth})", this);
 
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
             Die();
-    }
-
-    public void Kill()
-    {
-        if (IsDead) return;
-        currentHealth = 0;
-        Die();
     }
 
     void Die()
     {
         if (IsDead) return;
         IsDead = true;
-        Debug.Log($"Enemy '{name}' died", this);
-        Destroy(gameObject, despawnDelay); // remove from scene
+
+        foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = false;
+
+        gameObject.layer = 2; 
+
+        if (despawnDelay <= 0f)
+            Destroy(transform.root.gameObject);
+        else
+            StartCoroutine(DespawnAfter(despawnDelay));
+    }
+
+    System.Collections.IEnumerator DespawnAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (this) Destroy(transform.root.gameObject);
     }
 }

@@ -11953,7 +11953,7 @@ MonoBehaviour:
   lineWidth: 0.06
   minPointDistance: 0.02
   maxPoints: 4096
-  closeLoopOnRelease: 1
+  closeLoopOnRelease: 0
   loopWhileHeld: 1
   closeThreshold: 0.25
   groundY: 0
@@ -11962,6 +11962,13 @@ MonoBehaviour:
   autoClearDelay: 1
   snake: {fileID: 1602786133}
   pfDamagePopup: {fileID: 7992120634121765507, guid: 000b4763144901647bc326e1f9690691, type: 3}
+  minPointsToClose: 8
+  closeThresholdPixels: 28
+  selfIntersectEpsPx: 10
+  minPerimeterWorld: 0.25
+  angleSumThresholdDeg: 300
+  capturePad: 0.45
+  sampleBoundsScale: 0.9
 --- !u!4 &515266493
 Transform:
   m_ObjectHideFlags: 0
@@ -34217,7 +34224,7 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 50
   moveSpeed: 5
-  length: 10
+  length: 50
   maxLungeCharges: 999
   lungeCooldown: 3
 --- !u!4 &1603108814 stripped
