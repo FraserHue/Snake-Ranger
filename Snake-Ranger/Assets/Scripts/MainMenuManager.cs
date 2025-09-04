@@ -17,12 +17,6 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _CreditsMenuContainer;
     [SerializeField] GameObject _SettingsMenuContainer;
 
-    [Header("------------ Music Source ------------")]
-    [SerializeField] AudioSource musicSource;
-
-    [Header("------------ Audio Clip ------------")]
-    public AudioClip background;
-
     
     public void Awake()
     {
@@ -39,8 +33,6 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         OpenMenu(_MainMenuContainer);
-        musicSource.clip = background;
-        musicSource.Play();
     }
 
     public void MainMenuButtonClicked(MainMenuButtons buttonClicked)
