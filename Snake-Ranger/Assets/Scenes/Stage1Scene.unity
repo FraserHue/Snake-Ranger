@@ -34218,7 +34218,7 @@ MonoBehaviour:
   currentHealth: 50
   moveSpeed: 5
   length: 10
-  maxLungeCharges: 99
+  maxLungeCharges: 999
   lungeCooldown: 3
 --- !u!4 &1603108814 stripped
 Transform:
