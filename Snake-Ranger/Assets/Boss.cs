@@ -8,9 +8,13 @@ public class Boss : MonoBehaviour
     [SerializeField] float webSpeed = 6f;
     [SerializeField] float burstInterval = 10f;
     [SerializeField] float projectileLifetime = 6f;
-
     [SerializeField] int shotsPerBurst = 4;
     [SerializeField] float perShotDelay = 0.1f;
+
+    [SerializeField] Transform tonguePrefab;
+    [SerializeField] float tongueInterval = 5f;
+    [SerializeField] float tongueDuration = 0.6f;
+    [SerializeField] float tongueExtraOffset = 0.02f;
 
     static readonly Vector3[] WEB_DIRECTIONS = new Vector3[]
     {
@@ -24,19 +28,19 @@ public class Boss : MonoBehaviour
         (Vector3.left + Vector3.back)
     };
 
-    [SerializeField] float tongueInterval = 5f;
-
-    Coroutine _webLoop;
+    Coroutine _webLoop, _tongueLoop;
 
     void OnEnable()
     {
         if (_webLoop == null) _webLoop = StartCoroutine(WebBurstLoop());
+        if (_tongueLoop == null) _tongueLoop = StartCoroutine(TongueLoop());
     }
 
     void OnDisable()
     {
         if (_webLoop != null) StopCoroutine(_webLoop);
-        _webLoop = null;
+        if (_tongueLoop != null) StopCoroutine(_tongueLoop);
+        _webLoop = null; _tongueLoop = null;
     }
 
     IEnumerator WebBurstLoop()
@@ -55,7 +59,7 @@ public class Boss : MonoBehaviour
         int shots = Mathf.Max(1, shotsPerBurst);
         int[] specialShotIndex = new int[WEB_DIRECTIONS.Length];
         for (int d = 0; d < WEB_DIRECTIONS.Length; d++)
-            specialShotIndex[d] = Random.Range(0, shots); // exactly one per direction
+            specialShotIndex[d] = Random.Range(0, shots);
 
         for (int shot = 0; shot < shots; shot++)
         {
@@ -68,9 +72,48 @@ public class Boss : MonoBehaviour
                 SpawnProjectile(origin, WEB_DIRECTIONS[d].normalized, prefab);
             }
 
-            if (shot < shots - 1)
-                yield return new WaitForSeconds(perShotDelay);
+            if (shot < shots - 1) yield return new WaitForSeconds(perShotDelay);
         }
+    }
+
+    IEnumerator TongueLoop()
+    {
+        if (tonguePrefab == null) yield break;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(tongueInterval);
+
+            float surface = ForwardSurfaceDistance();
+            Vector3 worldPos = transform.position + transform.forward * (surface + tongueExtraOffset);
+            Transform t = Instantiate(tonguePrefab, worldPos, tonguePrefab.rotation);
+            t.SetParent(transform, true);
+
+            if (tongueDuration > 0f) Destroy(t.gameObject, tongueDuration);
+        }
+    }
+
+    float ForwardSurfaceDistance()
+    {
+        Collider c = GetComponent<Collider>();
+        if (c != null)
+        {
+            Vector3 e = c.bounds.extents;
+            Vector3 f = transform.forward;
+            f = new Vector3(Mathf.Abs(f.x), Mathf.Abs(f.y), Mathf.Abs(f.z));
+            return e.x * f.x + e.y * f.y + e.z * f.z;
+        }
+
+        Renderer r = GetComponent<Renderer>();
+        if (r != null)
+        {
+            Vector3 e = r.bounds.extents;
+            Vector3 f = transform.forward;
+            f = new Vector3(Mathf.Abs(f.x), Mathf.Abs(f.y), Mathf.Abs(f.z));
+            return e.x * f.x + e.y * f.y + e.z * f.z;
+        }
+
+        return 0.5f;
     }
 
     void SpawnProjectile(Vector3 position, Vector3 direction, Transform prefab)
@@ -89,8 +132,7 @@ public class Boss : MonoBehaviour
             mover.speed = webSpeed;
         }
 
-        if (projectileLifetime > 0f)
-            Destroy(proj.gameObject, projectileLifetime);
+        if (projectileLifetime > 0f) Destroy(proj.gameObject, projectileLifetime);
     }
 
     void OnDrawGizmosSelected()
@@ -100,6 +142,7 @@ public class Boss : MonoBehaviour
         float rayLen = 1.25f;
         for (int i = 0; i < WEB_DIRECTIONS.Length; i++)
             Gizmos.DrawLine(p, p + WEB_DIRECTIONS[i].normalized * rayLen);
+        Gizmos.DrawLine(p, p + transform.forward * 1.25f);
     }
 
     private class SimpleLinearMover : MonoBehaviour
