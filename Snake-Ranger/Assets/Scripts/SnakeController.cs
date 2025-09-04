@@ -33,12 +33,30 @@ public class SnakeController : MonoBehaviour
 
     public bool IsInvincible => isInvincible;
 
+
     void Start()
     {
+        int saved = PlayerPrefs.GetInt("UseKeyboardControl", 1);
+        bool keyboardEnabled = saved == 1;
+        ApplyKeyboardSetting(keyboardEnabled);
+
         for (int i = 0; i < InitialSnakeLength; i++) GrowSnake();
         aimPoint = transform.position;
     }
-    
+
+    public void SetUseKeyboardControl(bool enabled)
+    {
+        // save preference
+        PlayerPrefs.SetInt("UseKeyboardControl", enabled ? 1 : 0);
+        PlayerPrefs.Save();
+        ApplyKeyboardSetting(enabled);
+    }
+
+    private void ApplyKeyboardSetting(bool keyboardEnabled)
+    {
+        UseADControl = keyboardEnabled;
+        UseMouseControl = !keyboardEnabled;
+    }
 
     void Update()
     {
