@@ -8,16 +8,27 @@ public class SnakeStatus : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private int length = 10;
 
+    [SerializeField] private int maxLungeCharges = 99;
+    [SerializeField] private float lungeCooldown = 3f;
+
+    private int lungeCharges = 0;
+    private float nextLungeReadyTime = 0f;
+
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = Mathf.Max(0f, value); }
     public int Length { get => length; set => length = Mathf.Max(1, value); }
     public bool IsDead { get; private set; }
 
+    public bool CanLunge => lungeCharges > 0 && Time.time >= nextLungeReadyTime;
+    public float RemainingLungeCooldown => Mathf.Max(0f, nextLungeReadyTime - Time.time);
+    public int LungeCharges => lungeCharges;
+
     public event Action<int,int> OnHealthChanged;
     public event Action OnDied;
     public event Action<int> OnDamaged;
     public event Action<int> OnHealed;
+    public event Action<int> OnLungeChargesChanged;
 
     SnakeController controller;
 
@@ -70,5 +81,26 @@ public class SnakeStatus : MonoBehaviour
         currentHealth = Mathf.Clamp(newHealth, 1, maxHealth);
         IsDead = false;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+    public void OnEnemyKilled()
+    {
+        GrantLungeCharge(1);
+    }
+
+    public void GrantLungeCharge(int count)
+    {
+        int prev = lungeCharges;
+        lungeCharges = Mathf.Clamp(lungeCharges + Mathf.Max(0, count), 0, Mathf.Max(1, maxLungeCharges));
+        if (lungeCharges != prev) OnLungeChargesChanged?.Invoke(lungeCharges);
+    }
+
+    public bool TryConsumeLunge()
+    {
+        if (!CanLunge) return false;
+        lungeCharges = Mathf.Max(0, lungeCharges - 1);
+        nextLungeReadyTime = Time.time + Mathf.Max(0f, lungeCooldown);
+        OnLungeChargesChanged?.Invoke(lungeCharges);
+        return true;
     }
 }

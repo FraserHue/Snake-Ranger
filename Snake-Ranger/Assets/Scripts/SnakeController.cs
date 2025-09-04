@@ -55,7 +55,6 @@ public class SnakeController : MonoBehaviour
 
     public void SetUseKeyboardControl(bool enabled)
     {
-        // save preference
         PlayerPrefs.SetInt("UseKeyboardControl", enabled ? 1 : 0);
         PlayerPrefs.Save();
         ApplyKeyboardSetting(enabled);
@@ -71,6 +70,11 @@ public class SnakeController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S)) isMoving = false;
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
+
+        if (Input.GetMouseButtonDown(1) && _status != null && _status.TryConsumeLunge())
+        {
+            TriggerLunge();
+        }
 
         bool lungeActive = lungeTimeRemaining > 0f;
         Vector3 totalMove = Vector3.zero;
