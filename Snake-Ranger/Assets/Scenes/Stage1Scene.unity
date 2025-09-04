@@ -1530,6 +1530,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modeSwitcher: {fileID: 1602786132}
+  _cam: {fileID: 0}
+  _trail: {fileID: 0}
+  _drawer: {fileID: 0}
+  _vel: {x: 0, y: 0, z: 0}
+  _weHidCursor: 0
 --- !u!96 &1473938450
 TrailRenderer:
   serializedVersion: 3
@@ -1704,6 +1709,8 @@ MonoBehaviour:
   orthoAtMinLen: 5
   orthoAtMaxLen: 18
   currentMode: 0
+  _defaultFOV: -1
+  _defaultOrtho: -1
 --- !u!114 &1602786133
 MonoBehaviour:
   m_ObjectHideFlags: 0
