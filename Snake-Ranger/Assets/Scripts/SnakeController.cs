@@ -23,22 +23,31 @@ public class SnakeController : MonoBehaviour
     public bool UseMouseControl = true;
     public bool UseADControl = true;
 
-    // Lunge + i-frames
     public float LungeSpeed = 25f;
     public float LungeDuration = 0.2f;
     public float InvincibilityDuration = 0.5f;
 
     private float lungeTimeRemaining = 0f;
     private bool isInvincible = false;
-
     public bool IsInvincible => isInvincible;
+
+    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private float collisionCheckDistance = 0.2f;
+    [SerializeField] private float pushBackDistance = 0.5f;
+    [SerializeField] private float headRadius = 0.25f;
+    [SerializeField] private int collisionDamage = 1;
+    [SerializeField] private float damageCooldown = 0.15f;
+
+    private float _lastDamageTime = -999f;
+    private SnakeStatus _status;
 
     void Start()
     {
         for (int i = 0; i < InitialSnakeLength; i++) GrowSnake();
         aimPoint = transform.position;
+        _status = GetComponent<SnakeStatus>();
+        if (obstacleMask == 0) obstacleMask = LayerMask.GetMask("Obstacles");
     }
-    
 
     void Update()
     {
@@ -46,7 +55,6 @@ public class SnakeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)) isMoving = true;
 
         bool lungeActive = lungeTimeRemaining > 0f;
-
         Vector3 totalMove = Vector3.zero;
 
         if (lungeActive)
@@ -59,6 +67,67 @@ public class SnakeController : MonoBehaviour
         if (isMoving)
         {
             totalMove += transform.forward * MoveSpeed * Time.deltaTime;
+        }
+
+        if ((isMoving || lungeActive) && totalMove.sqrMagnitude > 0f)
+        {
+            Vector3 start = transform.position;
+            Vector3 dir = totalMove.normalized;
+            float dist = totalMove.magnitude;
+
+            bool hitSomething = false;
+            Vector3 hp = Vector3.zero;
+            Vector3 hn = Vector3.zero;
+            RaycastHit hit;
+
+            if (Physics.SphereCast(start, headRadius, dir, out hit, dist, obstacleMask, QueryTriggerInteraction.Collide))
+            {
+                hitSomething = true; hp = hit.point; hn = hit.normal;
+            }
+            else if (Physics.Raycast(start, transform.forward, out hit, Mathf.Max(collisionCheckDistance, dist), obstacleMask, QueryTriggerInteraction.Collide))
+            {
+                hitSomething = true; hp = hit.point; hn = hit.normal;
+            }
+            else
+            {
+                Vector3 end = start + totalMove;
+                Collider[] cols = Physics.OverlapSphere(end, headRadius, obstacleMask, QueryTriggerInteraction.Collide);
+                if (cols.Length > 0)
+                {
+                    float best = -1f;
+                    for (int i = 0; i < cols.Length; i++)
+                    {
+                        Vector3 p = cols[i].ClosestPoint(end);
+                        Vector3 n = end - p;
+                        float s = n.sqrMagnitude;
+                        if (s > best)
+                        {
+                            best = s;
+                            hp = p;
+                            hn = n.sqrMagnitude > 1e-6f ? n.normalized : -transform.forward;
+                            hitSomething = true;
+                        }
+                    }
+                }
+            }
+
+            if (hitSomething)
+            {
+                if (!IsInvincible && (Time.time - _lastDamageTime) >= damageCooldown)
+                {
+                    if (_status != null) _status.TakeDamage(collisionDamage);
+                    _lastDamageTime = Time.time;
+                }
+
+                Vector3 reflectDir = Vector3.Reflect(transform.forward, hn);
+                reflectDir.y = 0f;
+                if (reflectDir.sqrMagnitude < 1e-6f) reflectDir = Vector3.Cross(Vector3.up, hn).normalized;
+
+                transform.position = hp + hn * Mathf.Max(pushBackDistance, headRadius * 1.1f);
+                transform.rotation = Quaternion.LookRotation(reflectDir.normalized, Vector3.up);
+                transform.position += reflectDir.normalized * 0.01f;
+                totalMove = Vector3.zero;
+            }
         }
 
         if (totalMove.sqrMagnitude > 0f)
