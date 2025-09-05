@@ -2772,16 +2772,64 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 424595861}
     m_Modifications:
-    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 512841027470676198, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 512841027470676198, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_Color.g
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 512841027470676198, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_Color.r
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087228808998074815, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 760896891}
+    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsMenuButtonManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4204635298657602452, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_Name
+      value: SettingsMenu MAINMENU Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794672225360158395, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794672225360158395, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277510964143987114, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277510964143987114, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6889664882643095537, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
@@ -2864,52 +2912,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6277510964143987114, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6277510964143987114, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5794672225360158395, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5794672225360158395, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220206982774914717, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
+    - target: {fileID: 7428278302002694358, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 760896891}
-    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ButtonClicked
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410791525529909478, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SettingsMenuButtonManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4204635298657602452, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_Name
-      value: SettingsMenu MAINMENU Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 2087228808998074815, guid: 411c7eae861210a4b86e8ac61c227a9a, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

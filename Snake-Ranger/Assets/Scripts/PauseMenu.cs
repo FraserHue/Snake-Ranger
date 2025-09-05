@@ -68,6 +68,15 @@ public class PauseMenu : MonoBehaviour
         OpenMenu(pauseMenuContainer);
     }
 
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private void OpenMenu(GameObject menuToOpen)
     {
         if (pauseMenuContainer != null) pauseMenuContainer.SetActive(menuToOpen == pauseMenuContainer);

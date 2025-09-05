@@ -70,6 +70,8 @@ public class SnakeStatus : MonoBehaviour
         {
             IsDead = true;
             OnDied?.Invoke();
+
+            GameOverManager.Instance?.ShowGameOver();
         }
     }
 
