@@ -12,12 +12,57 @@ public class PauseMenu : MonoBehaviour
     [Header("Settings")]
     public static bool isPaused;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ReinitializeUIState();
+    }
+
+    private void ReinitializeUIState()
+    {
+
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        if (pauseMenuContainer == null)
+        {
+            var pm = GameObject.Find("PauseMenu"); 
+            if (pm != null) pauseMenuContainer = pm;
+        }
+        if (settingsMenuContainer == null)
+        {
+            var sm = GameObject.Find("SettingsMenuContainer"); 
+            if (sm != null) settingsMenuContainer = sm;
+        }
+
+        if (pauseMenuContainer) pauseMenuContainer.SetActive(false);
+        if (settingsMenuContainer) settingsMenuContainer.SetActive(false);
+
+        if (EventSystem.current == null)
+        {
+            var esGO = new GameObject("EventSystem", typeof(EventSystem), typeof(UnityEngine.EventSystems.StandaloneInputModule));
+
+        }
+
+        if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (pauseMenuContainer) pauseMenuContainer.SetActive(false);
         if (settingsMenuContainer) settingsMenuContainer.SetActive(false);
         isPaused = false;
+        ReinitializeUIState();
     }
 
     // Update is called once per frame
