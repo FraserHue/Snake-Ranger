@@ -1,10 +1,13 @@
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 30;
     [SerializeField] private int currentHealth = 30;
-    [SerializeField] private float despawnDelay = 0f; 
+    [SerializeField] private float despawnDelay = 0f;
+
+    public static event Action<Enemy> OnAnyEnemyDied;
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
@@ -15,7 +18,7 @@ public class Enemy : MonoBehaviour
         maxHealth = Mathf.Max(1, maxHealth);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         IsDead = currentHealth <= 0;
-        if (IsDead) Die(); 
+        if (IsDead) Die();
     }
 
     public void TakeDamage(int amount)
@@ -35,8 +38,9 @@ public class Enemy : MonoBehaviour
         IsDead = true;
 
         foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = false;
+        gameObject.layer = 2;
 
-        gameObject.layer = 2; 
+        OnAnyEnemyDied?.Invoke(this);
 
         if (despawnDelay <= 0f)
             Destroy(transform.root.gameObject);

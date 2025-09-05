@@ -7,9 +7,9 @@ public class SnakeStatus : MonoBehaviour
     [SerializeField] private int currentHealth = 10;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private int length = 10;
-
     [SerializeField] private int maxLungeCharges = 99;
     [SerializeField] private float lungeCooldown = 3f;
+    [SerializeField] private int healPerEnemyKill = 1;
 
     private int lungeCharges = 0;
     private float nextLungeReadyTime = 0f;
@@ -38,6 +38,22 @@ public class SnakeStatus : MonoBehaviour
         maxHealth = Mathf.Max(1, maxHealth);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         IsDead = currentHealth <= 0;
+    }
+
+    void OnEnable()
+    {
+        Enemy.OnAnyEnemyDied += HandleEnemyDied;
+    }
+
+    void OnDisable()
+    {
+        Enemy.OnAnyEnemyDied -= HandleEnemyDied;
+    }
+
+    void HandleEnemyDied(Enemy e)
+    {
+        Heal(healPerEnemyKill);
+        OnEnemyKilled();
     }
 
     public void TakeDamage(int amount)
