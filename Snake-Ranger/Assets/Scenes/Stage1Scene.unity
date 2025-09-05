@@ -3584,6 +3584,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7401fa830a090964f8c9c6907b06a821, type: 3}
+--- !u!1 &157281038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157281039}
+  m_Layer: 0
+  m_Name: 'PoisonSpider (Missing Prefab with guid: fe56d409c8c421e448ee6a7b97d0d9cd)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &157281039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157281038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.729, y: -0.268, z: -6.2298}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &159416043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21642,7 +21673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e021152b1d00bd4194b5f6e7973afe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6264491146812832702, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
+  prefab: {fileID: 6901887727375943836, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
   size: 100
 --- !u!4 &897974269
 Transform:
@@ -47231,6 +47262,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1734682095249659159, guid: d90cef2e950a3c44eaa9410d62950910, type: 3}
   m_PrefabInstance: {fileID: 4476497436038175538}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1453718354160986944
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4773048649359241562, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_Name
+      value: SpiderModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4287169
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.020849
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
 --- !u!1 &1549775461256775794
 GameObject:
   m_ObjectHideFlags: 0
@@ -47520,8 +47608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1602786134}
-  enemyPrefab: {fileID: 5373521051523785344, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
-  poolPrefab: {fileID: 6264491146812832702, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
+  enemyPrefab: {fileID: 4773048649359241562, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+  poolPrefab: {fileID: 6901887727375943836, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
   usePooling: 1
   poolSize: 100
   spawnPoints:
@@ -47690,3 +47778,5 @@ SceneRoots:
   - {fileID: 3408012289451942969}
   - {fileID: 7226331293407310363}
   - {fileID: 1323951696}
+  - {fileID: 1453718354160986944}
+  - {fileID: 157281039}
