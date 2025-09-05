@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2056177273507430969}
   - component: {fileID: 6600902482173174605}
   - component: {fileID: 5377888892755849107}
+  - component: {fileID: 2266292568091673365}
   m_Layer: 0
   m_Name: Boss Projectile
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,5 +107,18 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.4
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.9
+  m_Center: {x: 0, y: -3.42, z: 0}
+--- !u!114 &2266292568091673365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625652560700603410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183b7a6088b900d45a3390b4a529e1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
