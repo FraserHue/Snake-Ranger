@@ -7,7 +7,7 @@ public class ObjectPool : MonoBehaviour
     public PoolableObject prefab;
     public int size = 50;
     private List<PoolableObject> available;
-
+    public int AvailableCount => available == null ? 0 : available.Count;
     void Awake()
     {
         available = new List<PoolableObject>(size);
