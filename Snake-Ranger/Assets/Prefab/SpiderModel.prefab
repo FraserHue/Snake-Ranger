@@ -998,6 +998,7 @@ GameObject:
   - component: {fileID: 3487634934338070652}
   - component: {fileID: 1607136859159390522}
   - component: {fileID: 6901887727375943836}
+  - component: {fileID: 2313310921293839271}
   m_Layer: 0
   m_Name: SpiderModel
   m_TagString: Enemy
@@ -1153,6 +1154,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parent: {fileID: 0}
+--- !u!95 &2313310921293839271
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773048649359241562}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1f6f6086ad831e54e983a7b2c781094a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4792901754642995011
 GameObject:
   m_ObjectHideFlags: 0

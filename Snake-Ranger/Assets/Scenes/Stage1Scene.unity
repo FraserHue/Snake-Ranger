@@ -47305,6 +47305,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2313310921293839271, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1f6f6086ad831e54e983a7b2c781094a, type: 2}
     - target: {fileID: 4773048649359241562, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
       propertyPath: m_Name
       value: SpiderModel
@@ -47812,7 +47816,6 @@ SceneRoots:
   - {fileID: 1797002699}
   - {fileID: 3408012289451942969}
   - {fileID: 7226331293407310363}
-  - {fileID: 1323951696}
   - {fileID: 1453718354160986944}
   - {fileID: 157281039}
   - {fileID: 1239522835}
