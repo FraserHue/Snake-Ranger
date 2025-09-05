@@ -16,6 +16,9 @@ public class Boss : MonoBehaviour
     [SerializeField] float tongueDuration = 0.6f;
     [SerializeField] float tongueExtraOffset = 0.02f;
 
+    [SerializeField] float projectileYOffset = 0f;
+    [SerializeField] float tongueYOffset = 0f;
+
     static readonly Vector3[] WEB_DIRECTIONS = new Vector3[]
     {
         Vector3.right,
@@ -63,7 +66,7 @@ public class Boss : MonoBehaviour
 
         for (int shot = 0; shot < shots; shot++)
         {
-            Vector3 origin = transform.position;
+            Vector3 origin = transform.position + Vector3.up * projectileYOffset;
 
             for (int d = 0; d < WEB_DIRECTIONS.Length; d++)
             {
@@ -85,7 +88,7 @@ public class Boss : MonoBehaviour
             yield return new WaitForSeconds(tongueInterval);
 
             float surface = ForwardSurfaceDistance();
-            Vector3 worldPos = transform.position + transform.forward * (surface + tongueExtraOffset);
+            Vector3 worldPos = transform.position + Vector3.up * tongueYOffset + transform.forward * (surface + tongueExtraOffset);
             Transform t = Instantiate(tonguePrefab, worldPos, tonguePrefab.rotation);
             t.SetParent(transform, true);
 
@@ -138,11 +141,11 @@ public class Boss : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        Vector3 p = transform.position;
+        Vector3 p = transform.position + Vector3.up * projectileYOffset;
         float rayLen = 1.25f;
         for (int i = 0; i < WEB_DIRECTIONS.Length; i++)
             Gizmos.DrawLine(p, p + WEB_DIRECTIONS[i].normalized * rayLen);
-        Gizmos.DrawLine(p, p + transform.forward * 1.25f);
+        Gizmos.DrawLine(transform.position + Vector3.up * tongueYOffset, transform.position + Vector3.up * tongueYOffset + transform.forward * 1.25f);
     }
 
     private class SimpleLinearMover : MonoBehaviour
