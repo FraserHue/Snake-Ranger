@@ -2239,7 +2239,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524942020}
-  - component: {fileID: 1524942019}
   - component: {fileID: 1524942018}
   m_Layer: 0
   m_Name: AudioManager
@@ -2264,29 +2263,12 @@ MonoBehaviour:
   SFXSource: {fileID: 182155033}
   background: {fileID: 8300000, guid: bf17d3a88e3294185953a4c2aa69b03d, type: 3}
   death: {fileID: 8300000, guid: 6ad3f2ddcf1854b70979eb63be7c65d5, type: 3}
-  snake_damaged: {fileID: 0}
-  win: {fileID: 0}
-  spider_damaged: {fileID: 0}
+  snake_damaged: {fileID: 8300000, guid: 6ad3f2ddcf1854b70979eb63be7c65d5, type: 3}
+  win: {fileID: 8300000, guid: 35cc5875b0df84ea6a7f055aa5681755, type: 3}
+  spider_damaged: {fileID: 8300000, guid: 42a40a2fe4e6fb341aea58cecf2a460b, type: 3}
   uiHover: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
   uiClick: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
-  playClick: {fileID: 0}
---- !u!114 &1524942019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524942017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d30c1e7ce9f35498bc15a997a8066b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _debugMode: 1
-  _sceneToLoadAfterClickingPlay: Stage1Scene
-  _MainMenuContainer: {fileID: 1517161275}
-  _CreditsMenuContainer: {fileID: 270158440}
-  _SettingsMenuContainer: {fileID: 3332153274252047075}
+  playClick: {fileID: 8300000, guid: 40f9c6bf9f852a14ab5aa49b1f3bfc9f, type: 3}
 --- !u!4 &1524942020
 Transform:
   m_ObjectHideFlags: 0
@@ -3232,6 +3214,7 @@ GameObject:
   - component: {fileID: 9106221469562276430}
   - component: {fileID: 2864970993131007006}
   - component: {fileID: 9106221469562276431}
+  - component: {fileID: 9106221469562276432}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -3327,6 +3310,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3670140066396705548, guid: ea17c93f1225ec64d92868f4558c1dc6, type: 3}
+      propertyPath: clickClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 40f9c6bf9f852a14ab5aa49b1f3bfc9f, type: 3}
     - target: {fileID: 5516710042080468346, guid: ea17c93f1225ec64d92868f4558c1dc6, type: 3}
       propertyPath: m_Name
       value: Button
@@ -3606,6 +3593,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonType: 0
+--- !u!114 &9106221469562276432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751115017623626252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

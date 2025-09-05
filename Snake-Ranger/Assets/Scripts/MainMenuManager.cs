@@ -1,74 +1,124 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public static MainMenuManager Instance { get; private set; }
-
+    public static MainMenuManager _;
     [SerializeField] private bool _debugMode;
     [SerializeField] private string _sceneToLoadAfterClickingPlay;
+    public enum MainMenuButtons { play, options, credits, quit };
+
+    public enum CreditsButtons { back };
+
+    public enum SettingsButtons { back };
 
     [SerializeField] GameObject _MainMenuContainer;
     [SerializeField] GameObject _CreditsMenuContainer;
     [SerializeField] GameObject _SettingsMenuContainer;
 
-    public enum MainMenuButtons { play, options, credits, quit }
-    public enum CreditsButtons { back }
-    public enum SettingsButtons { back }
 
-    void Awake()
+    public void Awake()
     {
-        if (Instance == null)
+        if (_ == null)
         {
-            Instance = this;
+            _ = this;
         }
         else
         {
-            Debug.LogWarning("Duplicate MainMenuManager detected — destroying extra instance.");
-            Destroy(gameObject);
-            return;
+            Debug.LogError("There are more than 1 MainMenuManagers in the scene");
         }
     }
 
-    void OnDestroy()
+    private void Start()
     {
-        if (Instance == this) Instance = null;
+        OpenMenu(_MainMenuContainer);
     }
 
-    void Start()
+    public void MainMenuButtonClicked(MainMenuButtons buttonClicked)
     {
-        // ensure containers are in correct initial state
-        if (_MainMenuContainer != null) _MainMenuContainer.SetActive(true);
-        if (_CreditsMenuContainer != null) _CreditsMenuContainer.SetActive(false);
-        if (_SettingsMenuContainer != null) _SettingsMenuContainer.SetActive(false);
+        DebugMessage("Button Clicked: " + buttonClicked.ToString());
+        switch (buttonClicked)
+        {
+            case MainMenuButtons.play:
+                PlayClicked();
+                break;
+            case MainMenuButtons.options:
+                OptionsClicked();
+                break;
+            case MainMenuButtons.credits:
+                CreditsClicked();
+                break;
+            case MainMenuButtons.quit:
+                QuitGame();
+                break;
+            default:
+                Debug.Log("Button Clicked that wasn't implemented in MainMenuManager Method");
+                break;
+        }
     }
 
-    // public methods (unchanged)
-    public void OpenMenu(GameObject menuToOpen)
+    public void CreditsClicked()
     {
-        if (_MainMenuContainer != null) _MainMenuContainer.SetActive(menuToOpen == _MainMenuContainer);
-        if (_CreditsMenuContainer != null) _CreditsMenuContainer.SetActive(menuToOpen == _CreditsMenuContainer);
-        if (_SettingsMenuContainer != null) _SettingsMenuContainer.SetActive(menuToOpen == _SettingsMenuContainer);
+        OpenMenu(_CreditsMenuContainer);
+    }
+
+    public void OptionsClicked()
+    {
+        OpenMenu(_SettingsMenuContainer);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        OpenMenu(_MainMenuContainer);
+    }
+
+    public void CreditsButtonClicked(CreditsButtons buttonClicked)
+    {
+        switch (buttonClicked)
+        {
+            case CreditsButtons.back:
+                ReturnToMainMenu();
+                break;
+        }
+    }
+
+    public void SettingsButtonClicked(SettingsButtons buttonClicked)
+    {
+        switch (buttonClicked)
+        {
+            case SettingsButtons.back:
+                ReturnToMainMenu();
+                break;
+        }
+    }
+
+    private void DebugMessage(string message)
+    {
+        if (_debugMode)
+        {
+            Debug.Log(message);
+        }
     }
 
     public void PlayClicked()
     {
-        if (!string.IsNullOrEmpty(_sceneToLoadAfterClickingPlay))
-            SceneManager.LoadScene(_sceneToLoadAfterClickingPlay);
+        SceneManager.LoadScene(_sceneToLoadAfterClickingPlay);
     }
-
-    public void OptionsClicked() => OpenMenu(_SettingsMenuContainer);
-    public void CreditsClicked() => OpenMenu(_CreditsMenuContainer);
-
-    public void ReturnToMainMenu() => OpenMenu(_MainMenuContainer);
 
     public void QuitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.ExitPlaymode();
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
+    public void OpenMenu(GameObject menuToOpen)
+    {
+        _MainMenuContainer.SetActive(menuToOpen == _MainMenuContainer);
+        _CreditsMenuContainer.SetActive(menuToOpen == _CreditsMenuContainer);
+        _SettingsMenuContainer.SetActive(menuToOpen == _SettingsMenuContainer);
+    }
 }
