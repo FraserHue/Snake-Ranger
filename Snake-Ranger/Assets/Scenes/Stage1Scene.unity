@@ -35580,7 +35580,7 @@ MonoBehaviour:
   defaultLength: 3
   minLengthForScale: 3
   maxLengthForScale: 20
-  fovAtMinLen: 40
+  fovAtMinLen: 60
   fovAtMaxLen: 85
   orthoAtMinLen: 5
   orthoAtMaxLen: 18
