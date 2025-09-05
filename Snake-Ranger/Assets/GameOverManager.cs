@@ -15,6 +15,11 @@ public class GameOverManager : MonoBehaviour
 
     public void ShowGameOver()
     {
+        //var am = FindObjectOfType<AudioManager>();
+        //if (am != null && am.death != null)
+        //{
+        //    am.PlaySFX(am.death);
+        //}
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
         UnityEngine.EventSystems.EventSystem.current?.SetSelectedGameObject(null);

@@ -66,11 +66,15 @@ public class SnakeStatus : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnDamaged?.Invoke(amount);
         if (currentHealth != prev) OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        var am = FindObjectOfType<AudioManager>();
+        if (am != null && am.snake_damaged != null) am.PlaySFX(am.snake_damaged);
+
         if (currentHealth == 0)
         {
+            if (am != null && am.death != null) am.PlaySFX(am.death);
             IsDead = true;
             OnDied?.Invoke();
-
             GameOverManager.Instance?.ShowGameOver();
         }
     }

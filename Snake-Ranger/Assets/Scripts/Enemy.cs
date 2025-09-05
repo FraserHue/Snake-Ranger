@@ -48,6 +48,10 @@ public class Enemy : MonoBehaviour
         if (IsDead) return;
         IsDead = true;
 
+        var am = FindObjectOfType<AudioManager>();
+        if (am != null && am.spider_damaged != null)
+            am.PlaySFX(am.spider_damaged);
+
         OnAnyEnemyDied?.Invoke(this);
 
         if (GetComponent<Boss>() != null)

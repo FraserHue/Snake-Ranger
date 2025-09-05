@@ -8,6 +8,11 @@ public class WinScreenManager : MonoBehaviour
 
     public void ShowWin()
     {
+        var am = FindObjectOfType<AudioManager>();
+        if (am != null && am.win != null)
+        {
+            am.PlaySFX(am.win);
+        }
         if (winScreen != null)
         {
             winScreen.SetActive(true);

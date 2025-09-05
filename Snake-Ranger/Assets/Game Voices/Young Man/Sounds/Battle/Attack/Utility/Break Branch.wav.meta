@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 5bff97e36ed2aa1448bbfcf6cbf56a82
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 59464
+  packageName: "Game Voices \u2014 Young Man"
+  packageVersion: 1.0
+  assetPath: Assets/Game Voices/Young Man/Sounds/Battle/Attack/Utility/Break Branch.wav
+  uploadId: 370958

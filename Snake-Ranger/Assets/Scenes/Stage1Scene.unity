@@ -36671,9 +36671,10 @@ MonoBehaviour:
   musicSource: {fileID: 1766710067}
   SFXSource: {fileID: 1327817863}
   background: {fileID: 8300000, guid: bf17d3a88e3294185953a4c2aa69b03d, type: 3}
-  death: {fileID: 8300000, guid: c7e441c828a3843efb07e5665d1efb14, type: 3}
-  damage: {fileID: 0}
-  win: {fileID: 0}
+  death: {fileID: 8300000, guid: 53a1ec72601f14c1c9469fb698b13c49, type: 3}
+  snake_damaged: {fileID: 8300000, guid: 6ad3f2ddcf1854b70979eb63be7c65d5, type: 3}
+  win: {fileID: 8300000, guid: 35cc5875b0df84ea6a7f055aa5681755, type: 3}
+  spider_damaged: {fileID: 8300000, guid: 42a40a2fe4e6fb341aea58cecf2a460b, type: 3}
 --- !u!1001 &1605470203
 PrefabInstance:
   m_ObjectHideFlags: 0
