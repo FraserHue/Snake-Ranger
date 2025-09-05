@@ -19351,6 +19351,7 @@ GameObject:
   - component: {fileID: 810870291}
   - component: {fileID: 810870290}
   - component: {fileID: 810870289}
+  - component: {fileID: 810870292}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -19472,6 +19473,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810870287}
   m_CullTransparentMesh: 1
+--- !u!114 &810870292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810870287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!4 &816325575 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3454acfca5d9ccc4381880d3a157a71e, type: 3}
@@ -36675,6 +36690,9 @@ MonoBehaviour:
   snake_damaged: {fileID: 8300000, guid: 6ad3f2ddcf1854b70979eb63be7c65d5, type: 3}
   win: {fileID: 8300000, guid: 35cc5875b0df84ea6a7f055aa5681755, type: 3}
   spider_damaged: {fileID: 8300000, guid: 42a40a2fe4e6fb341aea58cecf2a460b, type: 3}
+  uiHover: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  uiClick: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
+  playClick: {fileID: 8300000, guid: 40f9c6bf9f852a14ab5aa49b1f3bfc9f, type: 3}
 --- !u!1001 &1605470203
 PrefabInstance:
   m_ObjectHideFlags: 0
