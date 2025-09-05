@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 53a1ec72601f14c1c9469fb698b13c49
+guid: 42a40a2fe4e6fb341aea58cecf2a460b
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -22,8 +22,8 @@ AudioImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 166441
-  packageName: FREE Casual Island Game Sounds
+  productId: 59464
+  packageName: "Game Voices \u2014 Young Man"
   packageVersion: 1.0
-  assetPath: Assets/AS_Casual_Island_Game_Sounds_FREE/Jingles/Jingle_3.wav
-  uploadId: 361942
+  assetPath: Assets/Game Voices/Young Man/Sounds/Fun/Emotes/Gulp.wav
+  uploadId: 370958

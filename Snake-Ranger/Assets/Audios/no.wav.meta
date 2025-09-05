@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 53a1ec72601f14c1c9469fb698b13c49
+guid: c7e441c828a3843efb07e5665d1efb14
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -25,5 +25,5 @@ AssetOrigin:
   productId: 166441
   packageName: FREE Casual Island Game Sounds
   packageVersion: 1.0
-  assetPath: Assets/AS_Casual_Island_Game_Sounds_FREE/Jingles/Jingle_3.wav
+  assetPath: Assets/AS_Casual_Island_Game_Sounds_FREE/SFX/SFX_4.wav
   uploadId: 361942
