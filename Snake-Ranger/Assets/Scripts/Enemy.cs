@@ -48,9 +48,19 @@ public class Enemy : MonoBehaviour
         if (IsDead) return;
         IsDead = true;
 
-        foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = false;
-        gameObject.layer = 2;
+        OnAnyEnemyDied?.Invoke(this);
 
+        if (GetComponent<Boss>() != null)
+        {
+            var win = FindObjectOfType<WinScreenManager>();
+            if (win != null)
+            {
+                float delay = Mathf.Max(0.5f, despawnDelay);
+                win.ShowWinDelayed(delay);
+            }
+        }
+
+        foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = false;
         gameObject.layer = 2;
 
         var poolable = GetComponent<PoolableObject>();

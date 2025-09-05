@@ -70,6 +70,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart()
     {
+        WaveSpawner.ResetGlobalCounters();
         Time.timeScale = 1f;
         isPaused = false;
         if (EventSystem.current != null)
@@ -88,6 +89,7 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        WaveSpawner.ResetGlobalCounters();
         Time.timeScale = 1f;
         isPaused = false;
         SceneManager.LoadScene("Main Menu");
@@ -95,8 +97,9 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        WaveSpawner.ResetGlobalCounters();
         #if UNITY_EDITOR
-                UnityEditor.EditorApplication.ExitPlaymode();
+        UnityEditor.EditorApplication.ExitPlaymode();
         #else
                     Application.Quit();
         #endif

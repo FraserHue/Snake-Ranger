@@ -22,12 +22,14 @@ public class GameOverManager : MonoBehaviour
 
     public void Restart()
     {
+        WaveSpawner.ResetGlobalCounters();
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToMainMenu()
     {
+        WaveSpawner.ResetGlobalCounters();
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
     }
