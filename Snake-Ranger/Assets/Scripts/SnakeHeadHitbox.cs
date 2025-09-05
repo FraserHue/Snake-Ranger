@@ -47,18 +47,34 @@ public class SnakeHeadHitbox : MonoBehaviour
             var col = _hits[i];
             if (col == null) continue;
 
-            var enemy = col.GetComponentInParent<Enemy>();
-            if (enemy == null || enemy.IsDead) continue;
+            int id = 0;
+            int dmg = contactDamage;
+            bool shouldDamage = false;
 
-            int id = enemy.GetInstanceID();
+            var enemy = col.GetComponentInParent<Enemy>();
+            if (enemy != null && !enemy.IsDead)
+            {
+                id = enemy.GetInstanceID();
+                shouldDamage = true;
+            }
+            else
+            {
+                var hazard = col.GetComponentInParent<DamagePlayerOnTouch>();
+                if (hazard != null && hazard.enabled)
+                {
+                    id = hazard.GetInstanceID();
+                    if (hazard.damage > 0) dmg = hazard.damage;
+                    shouldDamage = true;
+                }
+            }
+
+            if (!shouldDamage) continue;
 
             float last;
             if (_lastHitTimeByEnemy.TryGetValue(id, out last))
-            {
                 if (now - last < hitCooldownPerEnemy) continue;
-            }
 
-            snakeStatus.TakeDamage(contactDamage);
+            snakeStatus.TakeDamage(dmg);
             _lastHitTimeByEnemy[id] = now;
         }
     }

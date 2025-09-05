@@ -19,6 +19,8 @@ public class Boss : MonoBehaviour
     [SerializeField] float projectileYOffset = 0f;
     [SerializeField] float tongueYOffset = 0f;
 
+    [SerializeField] Animator animator;
+
     static readonly Vector3[] WEB_DIRECTIONS = new Vector3[]
     {
         Vector3.right,
@@ -35,6 +37,7 @@ public class Boss : MonoBehaviour
 
     void OnEnable()
     {
+        if (animator == null) animator = GetComponentInChildren<Animator>();
         if (_webLoop == null) _webLoop = StartCoroutine(WebBurstLoop());
         if (_tongueLoop == null) _tongueLoop = StartCoroutine(TongueLoop());
     }
@@ -86,6 +89,8 @@ public class Boss : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(tongueInterval);
+
+            if (animator) animator.SetTrigger("Tongue");
 
             float surface = ForwardSurfaceDistance();
             Vector3 worldPos = transform.position + Vector3.up * tongueYOffset + transform.forward * (surface + tongueExtraOffset);
@@ -145,7 +150,9 @@ public class Boss : MonoBehaviour
         float rayLen = 1.25f;
         for (int i = 0; i < WEB_DIRECTIONS.Length; i++)
             Gizmos.DrawLine(p, p + WEB_DIRECTIONS[i].normalized * rayLen);
-        Gizmos.DrawLine(transform.position + Vector3.up * tongueYOffset, transform.position + Vector3.up * tongueYOffset + transform.forward * 1.25f);
+
+        Vector3 t0 = transform.position + Vector3.up * tongueYOffset;
+        Gizmos.DrawLine(t0, t0 + transform.forward * 1.25f);
     }
 
     private class SimpleLinearMover : MonoBehaviour

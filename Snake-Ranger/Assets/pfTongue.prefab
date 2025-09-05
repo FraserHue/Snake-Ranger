@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4851222281496472944}
   - component: {fileID: 3138862130092258555}
   - component: {fileID: 5520518552853119889}
+  - component: {fileID: 3194639298755115686}
   m_Layer: 0
   m_Name: pfTongue
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9068105273384711192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -102,11 +103,24 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 3.57
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3194639298755115686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068105273384711192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183b7a6088b900d45a3390b4a529e1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
