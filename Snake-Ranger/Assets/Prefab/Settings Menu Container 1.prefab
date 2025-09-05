@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyboardToggle: {fileID: 5160268945155765864}
   snake: {fileID: 0}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1 &6190386134715700159
 GameObject:
   m_ObjectHideFlags: 0

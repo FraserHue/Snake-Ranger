@@ -5176,6 +5176,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7401fa830a090964f8c9c6907b06a821, type: 3}
   m_PrefabInstance: {fileID: 693420657}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &222586527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222586529}
+  - component: {fileID: 222586528}
+  m_Layer: 0
+  m_Name: PauseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &222586528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222586527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44478e8a2833015468f8f40ccc95b046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsMenuContainer: {fileID: 5879617}
+  pauseMenuContainer: {fileID: 1772356311}
+--- !u!4 &222586529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222586527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6769903, y: 1.4790286, z: -0.8530487}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &223788525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8768,7 +8814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -19499,7 +19545,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -23316,10 +23362,6 @@ PrefabInstance:
       propertyPath: snake
       value: 
       objectReference: {fileID: 1602786133}
-    - target: {fileID: 2788941865696116398, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
-      propertyPath: clickClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
     - target: {fileID: 3200226350520879038, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_SizeDelta.y
       value: 300
@@ -23439,7 +23481,11 @@ PrefabInstance:
     - target: {fileID: 5525583282095793173, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1603886228}
+      objectReference: {fileID: 222586528}
+    - target: {fileID: 5525583282095793173, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToPauseMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6306120437065406311, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_Name
       value: SettingsMenuContainer
@@ -34534,7 +34580,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: GoToMainMenu
         m_Mode: 1
@@ -36756,10 +36802,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1603886226}
-  - component: {fileID: 1603886228}
   - component: {fileID: 1603886229}
   m_Layer: 0
-  m_Name: AudioPauseManager
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36782,20 +36827,6 @@ Transform:
   - {fileID: 1327817864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1603886228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603886225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44478e8a2833015468f8f40ccc95b046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingsMenuContainer: {fileID: 5879617}
-  pauseMenuContainer: {fileID: 1772356311}
 --- !u!114 &1603886229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37016,7 +37047,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: OptionsClicked
         m_Mode: 1
@@ -44384,7 +44415,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -47890,6 +47921,7 @@ SceneRoots:
   - {fileID: 624986479}
   - {fileID: 786982296}
   - {fileID: 1603886226}
+  - {fileID: 222586529}
   - {fileID: 1512929090}
   - {fileID: 975444242}
   - {fileID: 897974269}
