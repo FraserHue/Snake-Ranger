@@ -48,7 +48,6 @@ public class RewardManager : MonoBehaviour
         pendingLevels.Enqueue(newLevel);
         if (!showingRewards)
         {
-            audioManager.PlaySFX(audioManager.levelUp);
             ShowNextReward();
 
         }
