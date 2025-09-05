@@ -29,6 +29,17 @@ public class Enemy : MonoBehaviour
             Die();
     }
 
+    public void ResetState()
+    {
+        currentHealth = maxHealth;
+        IsDead = false;
+        foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = true;
+        gameObject.layer = 0;
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null) agent.ResetPath();
+        gameObject.SetActive(true);
+    }
+
     void Die()
     {
         if (IsDead) return;
@@ -36,7 +47,14 @@ public class Enemy : MonoBehaviour
 
         foreach (var c in GetComponentsInChildren<Collider>(true)) c.enabled = false;
 
-        gameObject.layer = 2; 
+        gameObject.layer = 2;
+
+        var poolable = GetComponent<PoolableObject>();
+        if (poolable != null && poolable.Parent != null)
+        {
+            poolable.Parent.ReturnObjectToPool(poolable);
+            return;
+        }
 
         if (despawnDelay <= 0f)
             Destroy(transform.root.gameObject);
