@@ -3599,7 +3599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &157281039
 Transform:
   m_ObjectHideFlags: 0
@@ -19000,6 +19000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossSpider
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7f4b3255c0b48b04383401abb576ed44, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29153,6 +29157,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 53425c3dd2128ea47ac168adf760f9b2, type: 3}
       propertyPath: m_Name
       value: SpiderModel 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 53425c3dd2128ea47ac168adf760f9b2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
