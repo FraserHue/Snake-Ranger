@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1406541681666269807}
   - component: {fileID: 1394129618561539475}
   - component: {fileID: 6222117207147137756}
-  - component: {fileID: 7951642763368249899}
   - component: {fileID: 3328079397936957095}
-  - component: {fileID: 6368364754007809595}
+  - component: {fileID: 6264491146812832702}
+  - component: {fileID: 5551596342112165953}
   m_Layer: 0
   m_Name: SimpleEnemy
   m_TagString: Enemy
@@ -124,46 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b124a0ea2c737f4787bc75da8773b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  currentHealth: 30
-  despawnDelay: 0
---- !u!114 &7951642763368249899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5373521051523785344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Graph: {fileID: -7008044412475853326, guid: a81268cf017bfe2449fabe7a0bf91039, type: 2}
-  m_BlackboardVariableOverridesList:
-  - rid: 1067926014832410624
-  - rid: 1067926058458153027
-  m_IsInitialised: 0
-  m_IsStarted: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: 1067926014832410624
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 5373521051523785344}
-    - rid: 1067926058458153027
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 15307777304705379872
-          m_Value1: 8892833653428887809
-        Name: Target
-        m_Value: {fileID: 0}
+  maxHealth: 90
+  currentHealth: 90
+  despawnDelay: 1
 --- !u!195 &3328079397936957095
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -174,11 +137,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 8
+  m_Speed: 4
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -186,7 +149,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6368364754007809595
+--- !u!114 &6264491146812832702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,8 +158,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5373521051523785344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf10086825099c49b83e30506628a1c, type: 3}
+  m_Script: {fileID: 11500000, guid: c35c4f6c732067f468385f2a51f50376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviorAgentComponent: {fileID: 7951642763368249899}
-  variableName: Target
+  Parent: {fileID: 0}
+--- !u!114 &5551596342112165953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373521051523785344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85db645ca0cdbc14ebd97f607abf07dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  followUpdateInterval: 0.2
+  targetHeightOffset: 0.5

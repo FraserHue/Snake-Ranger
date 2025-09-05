@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016ce3b5d4d4f744f8ac949927f8823b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5373521051523785344, guid: 4e4429a1599682644ad542c2f0400fac, type: 3}
-  _minimumSpawnTime: 2
-  _maximumSpawnTime: 5
+  player: {fileID: 0}
+  enemyPrefab: {fileID: 0}
+  poolPrefab: {fileID: 0}
+  usePooling: 1
+  poolSize: 50
+  spawnPoints: []
+  minimumSpawnTime: 3
+  maximumSpawnTime: 6
