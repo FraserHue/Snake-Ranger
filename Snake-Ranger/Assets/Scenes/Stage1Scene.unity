@@ -21854,7 +21854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d339c56e46d79a43b670c8b2bfd0520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalSpawnLimit: 10
+  globalSpawnLimit: 150
 --- !u!4 &900756051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b45eee0a477c214ba0df286e1bb8105, type: 3}
@@ -47841,10 +47841,10 @@ MonoBehaviour:
   - {fileID: 3882385504233334885}
   - {fileID: 3882385503761231323}
   - {fileID: 3882385504103212143}
-  minimumSpawnTime: 1
-  maximumSpawnTime: 3
+  minimumSpawnTime: 0.2
+  maximumSpawnTime: 1.2
   useGlobalLimit: 1
-  initialGlobalSpawnLimit: 10
+  initialGlobalSpawnLimit: 200
   bossPrefab: {fileID: 202950316883497724, guid: 93db4c86aa5c8f342a71170539a25975, type: 3}
   bossSpawnPoint: {fileID: 975444242}
   spawnBossWhenLimitReached: 1
