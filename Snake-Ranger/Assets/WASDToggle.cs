@@ -5,6 +5,7 @@ public class WASDToggle : MonoBehaviour
 {
     public Toggle keyboardToggle;
     public SnakeController snake;
+    public AudioClip clickClip;
 
     void Start()
     {
@@ -23,6 +24,9 @@ public class WASDToggle : MonoBehaviour
     private void OnToggleChanged(bool isOn)
     {
         // persist and update snake
+        var am = AudioManager.Instance;
+        if (am == null) return;
+        am.PlaySFX(clickClip != null ? clickClip : am.uiClick);
         PlayerPrefs.SetInt("UseKeyboardControl", isOn ? 1 : 0);
         PlayerPrefs.Save();
         if (snake != null) snake.SetUseKeyboardControl(isOn);

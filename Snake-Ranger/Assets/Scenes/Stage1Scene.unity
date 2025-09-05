@@ -5176,6 +5176,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7401fa830a090964f8c9c6907b06a821, type: 3}
   m_PrefabInstance: {fileID: 693420657}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &222586527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222586529}
+  - component: {fileID: 222586528}
+  m_Layer: 0
+  m_Name: PauseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &222586528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222586527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44478e8a2833015468f8f40ccc95b046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsMenuContainer: {fileID: 5879617}
+  pauseMenuContainer: {fileID: 1772356311}
+--- !u!4 &222586529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222586527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6769903, y: 1.4790286, z: -0.8530487}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &223788525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7018,6 +7064,7 @@ GameObject:
   - component: {fileID: 304527056}
   - component: {fileID: 304527055}
   - component: {fileID: 304527054}
+  - component: {fileID: 304527057}
   m_Layer: 5
   m_Name: RestartLevel
   m_TagString: Untagged
@@ -7139,6 +7186,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304527052}
   m_CullTransparentMesh: 1
+--- !u!114 &304527057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304527052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &309497275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8681,6 +8742,7 @@ GameObject:
   - component: {fileID: 367807274}
   - component: {fileID: 367807273}
   - component: {fileID: 367807272}
+  - component: {fileID: 367807275}
   m_Layer: 5
   m_Name: RestartLevel
   m_TagString: Untagged
@@ -8752,7 +8814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -8802,6 +8864,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367807270}
   m_CullTransparentMesh: 1
+--- !u!114 &367807275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367807270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &370058828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11975,6 +12051,7 @@ GameObject:
   - component: {fileID: 477196718}
   - component: {fileID: 477196717}
   - component: {fileID: 477196716}
+  - component: {fileID: 477196719}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -12096,6 +12173,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477196714}
   m_CullTransparentMesh: 1
+--- !u!114 &477196719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477196714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &477772508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19439,6 +19530,7 @@ GameObject:
   - component: {fileID: 810870291}
   - component: {fileID: 810870290}
   - component: {fileID: 810870289}
+  - component: {fileID: 810870292}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -19510,7 +19602,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -19560,6 +19652,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810870287}
   m_CullTransparentMesh: 1
+--- !u!114 &810870292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810870287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!4 &816325575 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3454acfca5d9ccc4381880d3a157a71e, type: 3}
@@ -23432,10 +23538,14 @@ PrefabInstance:
     - target: {fileID: 5525583282095793173, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1603886228}
+      objectReference: {fileID: 222586528}
+    - target: {fileID: 5525583282095793173, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToPauseMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6306120437065406311, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_Name
-      value: Settings Menu Container 1
+      value: SettingsMenuContainer
       objectReference: {fileID: 0}
     - target: {fileID: 6306120437065406311, guid: f8fa0ae085a382c46a2ff282e315e839, type: 3}
       propertyPath: m_IsActive
@@ -31106,6 +31216,7 @@ GameObject:
   - component: {fileID: 1328735740}
   - component: {fileID: 1328735739}
   - component: {fileID: 1328735738}
+  - component: {fileID: 1328735741}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -31227,6 +31338,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328735736}
   m_CullTransparentMesh: 1
+--- !u!114 &1328735741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328735736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &1332797566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32981,6 +33106,7 @@ GameObject:
   - component: {fileID: 1400075429}
   - component: {fileID: 1400075428}
   - component: {fileID: 1400075427}
+  - component: {fileID: 1400075430}
   m_Layer: 5
   m_Name: RestartLevel
   m_TagString: Untagged
@@ -33102,6 +33228,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400075425}
   m_CullTransparentMesh: 1
+--- !u!114 &1400075430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400075425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &1400459392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34421,6 +34561,7 @@ GameObject:
   - component: {fileID: 1470793722}
   - component: {fileID: 1470793721}
   - component: {fileID: 1470793720}
+  - component: {fileID: 1470793723}
   m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
@@ -34492,7 +34633,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: GoToMainMenu
         m_Mode: 1
@@ -34542,6 +34683,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470793718}
   m_CullTransparentMesh: 1
+--- !u!114 &1470793723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470793718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!4 &1472925420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b45eee0a477c214ba0df286e1bb8105, type: 3}
@@ -36700,15 +36855,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1603886226}
-  - component: {fileID: 1603886228}
   - component: {fileID: 1603886229}
   m_Layer: 0
-  m_Name: AudioPauseManager
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1603886226
 Transform:
   m_ObjectHideFlags: 0
@@ -36726,20 +36880,6 @@ Transform:
   - {fileID: 1327817864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1603886228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603886225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44478e8a2833015468f8f40ccc95b046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingsMenuContainer: {fileID: 5879617}
-  pauseMenuContainer: {fileID: 1772356311}
 --- !u!114 &1603886229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36747,7 +36887,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603886225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7a00b0c3511fbf4684b626021ccffc2, type: 3}
   m_Name: 
@@ -36759,6 +36899,9 @@ MonoBehaviour:
   snake_damaged: {fileID: 8300000, guid: 6ad3f2ddcf1854b70979eb63be7c65d5, type: 3}
   win: {fileID: 8300000, guid: 35cc5875b0df84ea6a7f055aa5681755, type: 3}
   spider_damaged: {fileID: 8300000, guid: 42a40a2fe4e6fb341aea58cecf2a460b, type: 3}
+  uiHover: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  uiClick: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
+  playClick: {fileID: 8300000, guid: 40f9c6bf9f852a14ab5aa49b1f3bfc9f, type: 3}
 --- !u!1001 &1605470203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36885,6 +37028,7 @@ GameObject:
   - component: {fileID: 1607276190}
   - component: {fileID: 1607276189}
   - component: {fileID: 1607276188}
+  - component: {fileID: 1607276191}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -36956,7 +37100,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: OptionsClicked
         m_Mode: 1
@@ -37006,6 +37150,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607276186}
   m_CullTransparentMesh: 1
+--- !u!114 &1607276191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607276186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!4 &1607710903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c6d979f15a28be0459259e47f33377b1, type: 3}
@@ -44238,6 +44396,7 @@ GameObject:
   - component: {fileID: 2028247486}
   - component: {fileID: 2028247485}
   - component: {fileID: 2028247484}
+  - component: {fileID: 2028247487}
   m_Layer: 5
   m_Name: QuitGame
   m_TagString: Untagged
@@ -44309,7 +44468,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603886228}
+      - m_Target: {fileID: 222586528}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -44359,6 +44518,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028247482}
   m_CullTransparentMesh: 1
+--- !u!114 &2028247487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028247482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9ad00ac63021a45a51be6e607da37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: cd8b9f8ffad0cc64ea147215e28c6257, type: 3}
+  clickClip: {fileID: 8300000, guid: 32465f40ce999004f9c8b32b83eb7a64, type: 3}
 --- !u!1001 &2032677110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47309,6 +47482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpiderModel
       objectReference: {fileID: 0}
+    - target: {fileID: 4773048649359241562, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5279264317364823470, guid: aefe1ad4a9aa8d147a54a17cb97983e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4287169
@@ -47801,6 +47978,7 @@ SceneRoots:
   - {fileID: 624986479}
   - {fileID: 786982296}
   - {fileID: 1603886226}
+  - {fileID: 222586529}
   - {fileID: 1512929090}
   - {fileID: 975444242}
   - {fileID: 897974269}

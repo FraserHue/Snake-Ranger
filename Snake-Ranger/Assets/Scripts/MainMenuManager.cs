@@ -17,7 +17,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _CreditsMenuContainer;
     [SerializeField] GameObject _SettingsMenuContainer;
 
-    
+
     public void Awake()
     {
         if (_ == null)
@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
     public void MainMenuButtonClicked(MainMenuButtons buttonClicked)
     {
         DebugMessage("Button Clicked: " + buttonClicked.ToString());
-        switch(buttonClicked)
+        switch (buttonClicked)
         {
             case MainMenuButtons.play:
                 PlayClicked();
@@ -57,7 +57,7 @@ public class MainMenuManager : MonoBehaviour
                 break;
         }
     }
-    
+
     public void CreditsClicked()
     {
         OpenMenu(_CreditsMenuContainer);
@@ -75,7 +75,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void CreditsButtonClicked(CreditsButtons buttonClicked)
     {
-        switch(buttonClicked)
+        switch (buttonClicked)
         {
             case CreditsButtons.back:
                 ReturnToMainMenu();
@@ -99,7 +99,7 @@ public class MainMenuManager : MonoBehaviour
         {
             Debug.Log(message);
         }
-    } 
+    }
 
     public void PlayClicked()
     {
@@ -108,11 +108,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void QuitGame()
     {
-        # if UNITY_EDITOR
-                UnityEditor.EditorApplication.ExitPlaymode();
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
     public void OpenMenu(GameObject menuToOpen)
